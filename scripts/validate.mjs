@@ -5,6 +5,7 @@ const root = resolve(import.meta.dirname, '..');
 const pages = [
   'index.html',
   'labs/validador-tools.html',
+  'labs/inema-cursos.html',
   'curso/builder/modulo-1-1.html',
   'curso/builder/modulo-1-2.html',
   'curso/builder/modulo-1-3.html',
@@ -50,8 +51,17 @@ const all = pages.map(file => readFileSync(resolve(root, file), 'utf8')).join('\
 if (all.includes('navigator.modelContext')) errors.push('API obsoleta navigator.modelContext encontrada.');
 if (all.includes('unregisterTool(')) errors.push('Padrão obsoleto unregisterTool encontrado.');
 
+const foundation = readFileSync(resolve(root, 'curso/builder/modulo-1-1.html'), 'utf8');
+for (const expected of ['O site deixa de ser apenas algo que o agente enxerga', 'document.modelContext.registerTool', 'Acompanhe o momento mágico', '../../labs/inema-cursos.html']) {
+  if (!foundation.includes(expected)) errors.push(`modulo-1-1: conteúdo aprofundado ausente (${expected})`);
+}
+const index = readFileSync(resolve(root, 'index.html'), 'utf8');
+for (const expected of ['Cap. 1', 'capitulo-2', 'capitulo-3', 'capitulo-4', 'Capítulo 1 · módulos disponíveis']) {
+  if (!index.includes(expected)) errors.push(`index: arquitetura por capítulos ausente (${expected})`);
+}
+
 if (errors.length) {
   console.error(errors.join('\n'));
   process.exit(1);
 }
-console.log(`OK: ${pages.length} páginas, 4 módulos, 24 tópicos e manifesto consistente.`);
+console.log(`OK: ${pages.length} páginas, 4 módulos, 24 tópicos, 2 laboratórios e manifesto consistente.`);

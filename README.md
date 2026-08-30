@@ -1,22 +1,28 @@
 # WebMCP Builder — Formação 2
 
-Primeira fase prática da **Formação WebMCP — Sites e Agentes do Zero ao Expert**. O projeto ensina a sair do diagnóstico de prontidão e publicar ferramentas WebMCP declarativas e imperativas sem remover a experiência humana do site.
+Formação prática dedicada ao papel **WebMCP Builder**. O projeto ensina a sair do diagnóstico de prontidão e publicar ferramentas WebMCP declarativas e imperativas sem remover a experiência humana do site.
 
 ## O que está incluído
 
-- 4 módulos completos, 24 tópicos e cerca de 12 horas de estudo;
+- arquitetura de 4 capítulos Builder, cada um com seus próprios módulos;
+- Capítulo 1 publicado com 4 módulos completos, 24 tópicos e cerca de 12 horas;
 - progresso, dúvidas, anotações, temas e exportação/importação da jornada;
-- laboratórios por módulo e critérios de aceite;
+- mini-site INEMA Cursos para comparar pessoa, automação visual e WebMCP;
 - validador avançado de catálogos, tools e JSON Schemas;
-- progressão para o repositório `webmcp-3-integrator`;
 - geração estática pronta para GitHub Pages e Vercel.
 
-## Módulos
+## Capítulos e módulos
+
+O menu superior navega pelos capítulos da formação Builder. A numeração segue `capítulo.módulo`: `1.1`, `1.2`, `2.1` e assim por diante.
+
+O Capítulo 1 está publicado com estes módulos:
 
 1. WebMCP, MCP e a Web agêntica;
 2. ambiente de desenvolvimento;
 3. API declarativa;
 4. API imperativa.
+
+Os capítulos 2 (Design de ferramentas), 3 (Integração com a aplicação) e 4 (Qualidade de Builder) já estão mapeados no índice e serão publicados progressivamente.
 
 ## Executar localmente
 
@@ -40,6 +46,10 @@ O laboratório em `labs/validador-tools.html` recebe um descritor JSON auditáve
 - risco, confirmação humana, fallback e exemplo de resultado.
 
 O scanner é local, determinístico e não registra nem executa tools. Campos de governança como `risk`, `fallback` e `resultExample` não pertencem ao draft WebMCP; servem para revisar prontidão operacional.
+
+## Laboratório do Módulo 1.1
+
+`labs/inema-cursos.html` mantém a mesma busca em três modos: pessoa, agente visual e WebMCP. A chamada do agente é uma simulação didática explicitamente identificada; em ambientes compatíveis, a página também tenta registrar `buscar_cursos` pela API real.
 
 ## Especificação e limites
 

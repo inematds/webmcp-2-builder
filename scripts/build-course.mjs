@@ -1,6 +1,7 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { foundationSections } from './foundation-content.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const outDir = resolve(root, 'curso/builder');
@@ -14,12 +15,12 @@ const modules = [
     lab: 'Produzir um documento de arquitetura comparando automação visual, API tradicional, MCP, WebMCP e MCP + WebMCP.',
     svg: ['Interface visual', 'Tool estruturada', 'Agente'],
     topics: [
-      ['Evolua de cliques para ferramentas estruturadas', 'Automação visual interpreta pixels e DOM; uma tool expõe intenção, parâmetros e resposta em um contrato explícito.', 'A estrutura reduz ambiguidade e torna a execução observável sem eliminar a interface humana.', ['screenshots são frágeis', 'DOM muda com o layout', 'tools têm contrato', 'UI continua visível'], `// Em vez de "clique no terceiro botão"\n{\n  "tool": "buscar_cursos",\n  "arguments": { "tema": "WebMCP", "nivel": "iniciante" }\n}`],
-      ['Diferencie API, MCP e WebMCP', 'API tradicional é um contrato de rede; MCP padroniza a conversa entre um host e servidores de contexto; WebMCP expõe ferramentas ligadas ao estado da página.', 'A fronteira correta evita tratar WebMCP como substituto universal de backend ou de MCP.', ['API serve aplicações', 'MCP conecta hosts', 'WebMCP vive na página', 'composição é válida'], `API REST → servidor\nMCP → host ⇄ servidor MCP\nWebMCP → agente ⇄ documento aberto\nMCP + WebMCP → backend e experiência local`],
-      ['Modele a página como catálogo efêmero', 'Ferramentas WebMCP acompanham o documento, o usuário autenticado e o estado atual da interface.', 'Registrar só o que pode ser usado naquele momento reduz contexto e chamadas inválidas.', ['estado controla oferta', 'tools podem surgir', 'tools podem sair', 'catálogo é contextual'], `const controller = new AbortController();\nawait document.modelContext.registerTool(tool, { signal: controller.signal });\n// Ao mudar de tela:\ncontroller.abort();`],
-      ['Separe navegador, agente e backend', 'O navegador hospeda a tool e a experiência visível; o agente escolhe a ação; o backend continua impondo autorização e regras de negócio.', 'Sem essa separação, uma descrição de tool vira uma falsa barreira de segurança.', ['browser orquestra UI', 'agente propõe ação', 'backend autoriza', 'auditoria atravessa camadas'], `execute: async (input, { signal }) => {\n  const response = await fetch('/api/cursos', {\n    method: 'POST',\n    signal,\n    body: JSON.stringify(input)\n  });\n  if (!response.ok) throw new Error('Falha autorizada pelo backend');\n  return response.json();\n}`],
-      ['Mantenha o humano no circuito', 'A interface deve mostrar o que o agente preencheu e reservar confirmação explícita para efeitos relevantes.', 'O usuário precisa entender a ação antes de autorizar compra, envio, exclusão ou alteração sensível.', ['preview antes do efeito', 'confirmação proporcional', 'estado visível', 'cancelamento real'], `// Consulta: pode executar diretamente.\n// Mutação sensível: preparar → mostrar → confirmar.\n{ "status": "aguardando_confirmacao", "resumo": "Inscrição no curso X" }`],
-      ['Decida quando não usar WebMCP', 'Nem toda interação precisa virar tool. Conteúdo editorial, navegação simples e ações sem contrato estável podem continuar apenas como Web semântica.', 'Recusar uma tool ruim preserva o catálogo, a segurança e a capacidade de escolha do agente.', ['sem objetivo não há tool', 'não duplica API à toa', 'evite ações genéricas', 'fallback permanece'], `function deveSerTool(jornada) {\n  return jornada.objetivoClaro\n    && jornada.entradaEstruturavel\n    && jornada.resultadoVerificavel;\n}`]
+      ['Veja o problema antes da tecnologia', 'A mesma busca pode ser feita por uma pessoa, por automação visual ou por uma tool estruturada.', 'Comparar os três caminhos cria a imagem mental que sustenta o restante do curso.', ['objetivo humano', 'passos visuais', 'capacidade explícita', 'mesma interface'], ''],
+      ['Separe cinco formas de conversar com um site', 'Web semântica, automação do navegador, API, MCP e WebMCP resolvem problemas diferentes.', 'A distinção impede que nomes parecidos virem uma única abstração vaga.', ['entender', 'operar', 'chamar', 'descobrir'], ''],
+      ['Acompanhe o momento mágico do WebMCP', 'A página registra; o navegador observa; o agente escolhe; o JavaScript executa; o resultado volta.', 'Entender o ciclo completo revela onde cada responsabilidade realmente vive.', ['registro', 'descoberta', 'escolha', 'execução'], ''],
+      ['Leia sua primeira tool linha por linha', 'Uma tool combina nome, descrição, schema e uma função execute.', 'Cada campo influencia uma decisão diferente do agente e da aplicação.', ['name identifica', 'description orienta', 'schema restringe', 'execute realiza'], ''],
+      ['Veja o catálogo mudar com o contexto', 'As capacidades úteis mudam entre home, produto, carrinho e área autenticada.', 'Um catálogo contextual reduz ruído e evita oferecer ações impossíveis.', ['home busca', 'produto escolhe', 'carrinho altera', 'sessão autoriza'], ''],
+      ['Construa, erre e explique sua arquitetura', 'O Builder precisa prever fallback, autorização, cancelamento, evidência e limites.', 'O projeto fecha o modelo mental com uma entrega que pode ser demonstrada e criticada.', ['fallback', 'segurança', 'evidência', 'projeto'], '']
     ]
   },
   {
@@ -65,6 +66,44 @@ const modules = [
       ['Controle ciclo de vida com AbortSignal', 'O signal de registerTool remove a ferramenta quando abortado; o signal recebido por execute cancela a chamada em andamento.', 'Esse modelo evita ferramentas obsoletas e trabalho continuando depois que o agente perdeu interesse.', ['signal de registro remove', 'signal de execução cancela', 'fetch aceita signal', 'cleanup é determinístico'], `const registro = new AbortController();\nawait document.modelContext.registerTool(tool, { signal: registro.signal });\n// desmontagem do componente\nregistro.abort('Tela encerrada');`],
       ['Descubra e execute tools na página', 'getTools lista ferramentas expostas ao documento e executeTool executa uma RegisteredTool com entrada estruturada.', 'Essas operações viabilizam agentes in-page e testes controlados sem simular um agente externo.', ['getTools é assíncrono', 'origem pode filtrar', 'execute usa RegisteredTool', 'cancelamento opcional'], `const tools = await document.modelContext.getTools();\nconst buscar = tools.find((tool) => tool.name === 'buscar_cursos');\nconst raw = await document.modelContext.executeTool(buscar, { tema: 'WebMCP' });\nconsole.log(JSON.parse(raw));`],
       ['Entregue um catálogo pequeno e coerente', 'Buscar, consultar e verificar disponibilidade formam uma sequência com responsabilidades distintas e sem tool genérica.', 'Um catálogo enxuto melhora a escolha do agente e cria uma base clara para a fase Integrator.', ['buscar lista', 'consultar detalha', 'disponibilidade verifica', 'sem sobreposição'], `buscar_cursos({ tema, nivel })\nconsultar_curso({ cursoId })\nconsultar_disponibilidade({ cursoId, turmaId })\n// Não criar: gerenciar_curso({ qualquerCoisa })`]
+    ]
+  }
+];
+
+const chapters = [
+  {
+    id: 'capitulo-1', number: '1', title: 'Fundamentos da Web agêntica', status: 'disponivel',
+    description: 'Do modelo mental à primeira tool registrada dentro de uma página.',
+    modules: modules.map(module => ({ number: module.number, title: module.title, href: `curso/builder/modulo-${module.id}.html` }))
+  },
+  {
+    id: 'capitulo-2', number: '2', title: 'Design de ferramentas', status: 'proximo',
+    description: 'Transforme jornadas humanas em contratos claros, pequenos e verificáveis.',
+    modules: [
+      { number: '2.1', title: 'Da jornada à intenção' },
+      { number: '2.2', title: 'Schemas que orientam agentes' },
+      { number: '2.3', title: 'Resultados, erros e recuperação' },
+      { number: '2.4', title: 'Catálogos contextuais' }
+    ]
+  },
+  {
+    id: 'capitulo-3', number: '3', title: 'Integração com a aplicação', status: 'proximo',
+    description: 'Conecte tools à interface, ao estado e ao backend sem duplicar regras.',
+    modules: [
+      { number: '3.1', title: 'Estado da UI e execução' },
+      { number: '3.2', title: 'Backend, sessão e autorização' },
+      { number: '3.3', title: 'Frameworks e ciclo de vida' },
+      { number: '3.4', title: 'Fallback e compatibilidade' }
+    ]
+  },
+  {
+    id: 'capitulo-4', number: '4', title: 'Qualidade de Builder', status: 'proximo',
+    description: 'Teste escolha, execução, segurança e experiência antes da entrega.',
+    modules: [
+      { number: '4.1', title: 'Ameaças e limites de confiança' },
+      { number: '4.2', title: 'Evals de escolha e argumentos' },
+      { number: '4.3', title: 'Observabilidade e governança' },
+      { number: '4.4', title: 'Projeto final Builder' }
     ]
   }
 ];
@@ -138,12 +177,8 @@ function nav(depth = 0) {
       </div>
       <div class="flex items-center gap-1">
         <div class="hidden lg:flex items-center gap-1">
-          <a class="phase-chip px-2.5 py-1.5 rounded-lg text-sm text-neutral-400 hover:text-yellow-400" href="https://inematds.github.io/webmcp-1-formacao/">Formação</a>
-          <a class="phase-chip px-2.5 py-1.5 rounded-lg text-sm font-semibold" aria-current="page" href="${rel}/index.html">Builder</a>
-          <a class="phase-chip px-2.5 py-1.5 rounded-lg text-sm text-neutral-400 hover:text-blue-400" href="https://inematds.github.io/webmcp-3-integrator/">Integrator</a>
-          <a class="phase-chip px-2.5 py-1.5 rounded-lg text-sm text-neutral-400 hover:text-purple-400" href="https://inematds.github.io/webmcp-4-agent-developer/">Agent</a>
-          <a class="phase-chip px-2.5 py-1.5 rounded-lg text-sm text-neutral-400 hover:text-amber-400" href="https://inematds.github.io/webmcp-5-expert/">Expert</a>
-          <a class="phase-chip hidden xl:inline-flex px-2.5 py-1.5 rounded-lg text-sm text-neutral-400 hover:text-rose-400" href="https://inematds.github.io/webmcp-6-agent-hub/">Hub</a>
+          ${chapters.map((chapter, index) => `<a class="phase-chip px-2.5 py-1.5 rounded-lg text-sm ${index === 0 ? 'font-semibold' : 'text-neutral-400 hover:text-emerald-400'}" ${index === 0 ? 'aria-current="page"' : ''} href="${rel}/index.html#${chapter.id}">Cap. ${chapter.number}<span class="hidden xl:inline"> · ${chapter.title.split(' ')[0]}</span></a>`).join('\n          ')}
+          <a class="phase-chip px-2.5 py-1.5 rounded-lg text-sm text-sky-400 hover:text-sky-300" href="${rel}/labs/validador-tools.html">Laboratórios</a>
         </div>
         <button type="button" data-inema-journey-open class="p-2 rounded-lg text-neutral-300 hover:bg-dark-700" aria-label="Abrir minha jornada"><span aria-hidden="true">◷</span><span data-inema-journey-badge class="inema-journey-badge" data-count="0"></span></button>
         <div class="relative">
@@ -161,13 +196,9 @@ function nav(depth = 0) {
         </button>
       </div>
     </div>
-    <div class="lg:hidden flex items-center gap-1 overflow-x-auto pb-2" aria-label="Fases da formação">
-      <a class="phase-chip flex-shrink-0 px-3 py-2 rounded-lg text-xs text-neutral-400 hover:text-yellow-400" href="https://inematds.github.io/webmcp-1-formacao/">F0 · Formação</a>
-      <a class="phase-chip flex-shrink-0 px-3 py-2 rounded-lg text-xs font-semibold" aria-current="page" href="${rel}/index.html">F1 · Builder</a>
-      <a class="phase-chip flex-shrink-0 px-3 py-2 rounded-lg text-xs text-neutral-400 hover:text-blue-400" href="https://inematds.github.io/webmcp-3-integrator/">F2 · Integrator</a>
-      <a class="phase-chip flex-shrink-0 px-3 py-2 rounded-lg text-xs text-neutral-400 hover:text-purple-400" href="https://inematds.github.io/webmcp-4-agent-developer/">F3 · Agent</a>
-      <a class="phase-chip flex-shrink-0 px-3 py-2 rounded-lg text-xs text-neutral-400 hover:text-amber-400" href="https://inematds.github.io/webmcp-5-expert/">F4 · Expert</a>
-      <a class="phase-chip flex-shrink-0 px-3 py-2 rounded-lg text-xs text-neutral-400 hover:text-rose-400" href="https://inematds.github.io/webmcp-6-agent-hub/">F5 · Hub</a>
+    <div class="lg:hidden flex items-center gap-1 overflow-x-auto pb-2" aria-label="Capítulos do WebMCP Builder">
+      ${chapters.map((chapter, index) => `<a class="phase-chip flex-shrink-0 px-3 py-2 rounded-lg text-xs ${index === 0 ? 'font-semibold' : 'text-neutral-400 hover:text-emerald-400'}" ${index === 0 ? 'aria-current="page"' : ''} href="${rel}/index.html#${chapter.id}">Cap. ${chapter.number}</a>`).join('\n      ')}
+      <a class="phase-chip flex-shrink-0 px-3 py-2 rounded-lg text-xs text-sky-400" href="${rel}/labs/validador-tools.html">Labs</a>
     </div>
   </div>
 </nav>`;
@@ -240,6 +271,10 @@ function indexPage() {
   </div>
 </article>`).join('\n');
   const modals = modules.map(m => `<div id="modal-${m.id}" class="modal hidden fixed inset-0 z-[70] flex items-center justify-center p-2 sm:p-4 bg-black/80" role="dialog" aria-modal="true" aria-label="Módulo ${m.number}" onclick="if(event.target===this)closeModal()"><div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600"><div class="p-4 border-b border-dark-600 flex justify-between"><span><strong class="text-emerald-400">${m.number}</strong> · ${m.title}</span><button type="button" onclick="closeModal()" class="text-2xl" aria-label="Fechar">&times;</button></div><iframe src="curso/builder/modulo-${m.id}.html" title="Módulo ${m.number}" class="flex-1 w-full rounded-b-xl"></iframe></div></div>`).join('\n');
+  const chapterMap = chapters.map(chapter => `<article id="${chapter.id}" class="chapter-map bg-dark-800 border ${chapter.status === 'disponivel' ? 'border-emerald-500/30' : 'border-dark-600'} rounded-xl p-6">
+  <div class="flex flex-wrap items-start justify-between gap-4 mb-5"><div><p class="text-sm font-semibold ${chapter.status === 'disponivel' ? 'text-emerald-400' : 'text-neutral-400'}">CAPÍTULO ${chapter.number}</p><h3 class="text-xl font-bold mt-1">${chapter.title}</h3><p class="text-sm text-neutral-400 mt-2 max-w-2xl">${chapter.description}</p></div><span class="px-3 py-1 rounded-full text-xs ${chapter.status === 'disponivel' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-dark-700 text-neutral-400'}">${chapter.status === 'disponivel' ? 'Disponível' : 'Próximo'}</span></div>
+  <ol class="grid sm:grid-cols-2 gap-3">${chapter.modules.map(item => `<li>${item.href ? `<a class="module-row flex gap-3 rounded-lg bg-dark-700/60 p-3 hover:bg-dark-700" href="${item.href}">` : '<div class="module-row flex gap-3 rounded-lg bg-dark-700/30 p-3">'}<strong class="text-emerald-400 text-sm">${item.number}</strong><span class="text-sm text-neutral-300">${item.title}</span>${item.href ? '</a>' : '</div>'}</li>`).join('')}</ol>
+</article>`).join('\n');
   return `${head({title:'Formação 2',description:'Formação prática WebMCP Builder com quatro módulos, laboratórios e validador avançado de tools e schemas.'})}
 <body class="bg-dark-900 text-neutral-100 min-h-screen">
 ${nav(0)}
@@ -251,13 +286,14 @@ ${nav(0)}
     </div>
   </header>
   <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-12"><div class="bg-dark-800 p-4 rounded-xl border border-dark-600"><strong class="text-2xl text-emerald-400">4</strong><p class="text-sm text-neutral-400">Módulos</p></div><div class="bg-dark-800 p-4 rounded-xl border border-dark-600"><strong class="text-2xl text-emerald-400">24</strong><p class="text-sm text-neutral-400">Tópicos</p></div><div class="bg-dark-800 p-4 rounded-xl border border-dark-600"><strong class="text-2xl text-emerald-400">12h</strong><p class="text-sm text-neutral-400">Carga estimada</p></div><div class="bg-dark-800 p-4 rounded-xl border border-dark-600"><strong class="text-2xl text-emerald-400">1</strong><p class="text-sm text-neutral-400">Scanner avançado</p></div></div>
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-12"><div class="bg-dark-800 p-4 rounded-xl border border-dark-600"><strong class="text-2xl text-emerald-400">4</strong><p class="text-sm text-neutral-400">Capítulos Builder</p></div><div class="bg-dark-800 p-4 rounded-xl border border-dark-600"><strong class="text-2xl text-emerald-400">4</strong><p class="text-sm text-neutral-400">Módulos disponíveis</p></div><div class="bg-dark-800 p-4 rounded-xl border border-dark-600"><strong class="text-2xl text-emerald-400">24</strong><p class="text-sm text-neutral-400">Tópicos publicados</p></div><div class="bg-dark-800 p-4 rounded-xl border border-dark-600"><strong class="text-2xl text-emerald-400">2</strong><p class="text-sm text-neutral-400">Laboratórios</p></div></div>
     <div class="bg-dark-800 border border-emerald-500/30 rounded-xl p-6 mb-12"><div class="flex flex-col md:flex-row md:items-center justify-between gap-5"><div><p class="text-xs text-emerald-400 font-semibold">PROGRESSO COMPARTILHADO</p><h2 class="text-2xl font-bold mt-2">Sua jornada continua entre os repositórios</h2><p class="text-neutral-400 mt-2">O mesmo identificador da Formação 1 registra lidos, dúvidas e notas. No GitHub Pages, a origem é compartilhada; JSON mantém o fallback portátil.</p></div><div data-inema-meter="trilha:1" class="inema-meter min-w-64"><div class="flex justify-between gap-3 text-sm text-neutral-400 mb-2"><span data-inema-meter-frac>0 de 24</span><span data-inema-meter-pct>0%</span></div><div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill></div></div></div></div></div>
-    <section id="mapa" class="mb-12"><h2 class="text-2xl font-bold mb-6">Mapa da trilha</h2><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">${cards}</div></section>
+    <section id="mapa" class="mb-12"><h2 class="text-2xl font-bold mb-2">Mapa da formação Builder</h2><p class="text-neutral-400 mb-6">O topo navega por capítulos. Dentro de cada capítulo, os módulos seguem a numeração capítulo.módulo.</p><div class="grid lg:grid-cols-2 gap-5">${chapterMap}</div></section>
+    <section class="mb-12"><h2 class="text-2xl font-bold mb-6">Capítulo 1 · módulos disponíveis</h2><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">${cards}</div></section>
     <section class="mb-12"><div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 border border-emerald-500/30 rounded-xl p-6"><p class="text-xs text-emerald-400 font-semibold">LABORATÓRIO TRANSVERSAL</p><h2 class="text-2xl font-bold mt-2">Validador de tools e schemas</h2><p class="text-neutral-300 mt-3 max-w-3xl">Cole um catálogo auditável em JSON e receba diagnóstico de contrato, clareza, schema, ciclo de vida, risco e exemplo de saída. O laboratório não registra nem executa ferramentas.</p><div class="flex justify-start mt-5"><a href="labs/validador-tools.html" class="px-5 py-3 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-semibold">Validar meu catálogo</a></div></div></section>
     <h2 class="text-2xl font-bold mb-6">Conteúdo detalhado</h2>
     ${details}
-    <section class="mt-14 bg-dark-800 border border-blue-500/30 rounded-xl p-8"><span class="text-blue-400 text-xs font-semibold">PRÓXIMA FASE</span><h2 class="text-2xl font-bold mt-2">WebMCP Integrator</h2><p class="text-neutral-300 mt-3">Ao concluir os 24 tópicos e as quatro entregas, salve sua jornada e avance para migração de sites existentes, qualidade de tools e frameworks.</p><div class="flex justify-start flex-wrap gap-3 mt-6"><button type="button" data-inema-journey-open class="px-5 py-3 rounded-lg bg-dark-700 hover:bg-dark-600">Salvar / exportar jornada</button><a href="https://inematds.github.io/webmcp-3-integrator/" class="px-5 py-3 rounded-lg bg-blue-600 hover:bg-blue-500 text-white">Pré-visualizar Integrator</a></div></section>
+    <section class="mt-14 bg-dark-800 border border-blue-500/30 rounded-xl p-8"><p class="text-blue-400 text-xs font-semibold">CONTINUIDADE DO BUILDER</p><h2 class="text-2xl font-bold mt-2">Próximo: design de ferramentas</h2><p class="text-neutral-300 mt-3">Depois dos fundamentos, a mesma formação continua nos capítulos 2, 3 e 4. Cada capítulo terá módulos próprios; nenhum deles muda o papel do aluno para Integrator, Agent ou Expert.</p><div class="flex justify-start flex-wrap gap-3 mt-6"><button type="button" data-inema-journey-open class="px-5 py-3 rounded-lg bg-dark-700 hover:bg-dark-600">Salvar / exportar jornada</button><a href="#capitulo-2" class="px-5 py-3 rounded-lg bg-blue-600 hover:bg-blue-500 text-white">Ver módulos do capítulo 2</a></div></section>
   </section>
 </main>
 ${modals}
@@ -343,7 +379,7 @@ function topicSection(module, topic, i) {
 function modulePage(module, idx) {
   const next = modules[idx+1];
   const toc = module.topics.map((t,i)=>`<li><a class="toc-link block border-l-2 border-dark-600 px-3 py-2 text-sm text-neutral-400 hover:text-emerald-400" href="#topico-${i+1}">${i+1}. ${t[0]}</a></li>`).join('\n');
-  const sections = module.topics.map((t,i)=>topicSection(module,t,i)).join('\n');
+  const sections = module.id === '1-1' ? foundationSections : module.topics.map((t,i)=>topicSection(module,t,i)).join('\n');
   return `${head({title:`Módulo ${module.number} — ${module.title}`,description:module.description,depth:1})}
 <body class="bg-dark-900 text-neutral-100 min-h-screen">
 ${nav(1)}
@@ -354,7 +390,7 @@ ${nav(1)}
 <main id="conteudo" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
   <div class="grid lg:grid-cols-[15rem_minmax(0,1fr)] gap-10">
     <aside><nav data-inema-toc class="hidden lg:block sticky top-24" aria-label="Índice do módulo"><p class="text-sm text-neutral-400 mb-3" data-inema-section-counter>Seção 1 de 6</p><ol class="space-y-1">${toc}</ol></nav></aside>
-    <article>${sections}
+    <article class="min-w-0">${sections}
       <section class="mb-12"><div class="bg-gradient-to-br from-emerald-900/40 via-dark-800 to-dark-800 rounded-xl border border-emerald-500/30 p-8"><h2 class="text-2xl font-bold mb-6">📦 Entrega do módulo</h2><p class="text-neutral-300 mb-6">${module.lab}</p><div class="grid md:grid-cols-2 gap-6 mb-8"><div class="bg-emerald-900/20 border border-emerald-500/30 rounded-xl p-5"><h3 class="text-emerald-400 font-semibold">Critério de aceite</h3><p class="text-neutral-300 text-sm mt-2">A entrega funciona com suporte WebMCP e mantém o caminho manual quando a API não existe.</p></div><div class="bg-sky-900/20 border border-sky-500/30 rounded-xl p-5"><h3 class="text-sky-400 font-semibold">Evidência</h3><p class="text-neutral-300 text-sm mt-2">Inclua código, cenário testado, resultado observado e uma limitação conhecida.</p></div></div><div class="flex justify-start flex-wrap gap-3"><a href="../../index.html" class="px-5 py-3 rounded-lg bg-dark-700 hover:bg-dark-600">← Voltar para a trilha</a>${next?`<a href="modulo-${next.id}.html" class="px-5 py-3 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white">Próximo módulo: ${next.number} →</a>`:`<a href="../../labs/validador-tools.html" class="px-5 py-3 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white">Validar catálogo final →</a>`}</div></div></section>
       <section class="border border-dark-600 rounded-xl p-6"><h2 class="text-xl font-bold">Fontes técnicas</h2><ul class="mt-4 space-y-2 text-sm"><li><a class="text-sky-400 hover:text-sky-300" href="https://github.com/webmachinelearning/webmcp" target="_blank" rel="noreferrer">Draft e repositório oficial WebMCP</a></li><li><a class="text-sky-400 hover:text-sky-300" href="https://webmachinelearning.github.io/webmcp/" target="_blank" rel="noreferrer">Especificação renderizada</a></li><li class="text-neutral-400">A API declarativa ainda possui pontos em debate; valide o draft antes de produção.</li></ul></section>
     </article>
@@ -362,6 +398,26 @@ ${nav(1)}
 </main>
 <footer class="border-t border-dark-600 py-8"><div class="max-w-6xl mx-auto px-4 text-sm text-neutral-500">WebMCP Builder · Módulo ${module.number} · INEMA</div></footer>
 ${scripts(1)}
+${module.id === '1-1' ? '<script src="../../assets/foundation.js"></script>' : ''}
+</body></html>`;
+}
+
+function learningLabPage() {
+  return `${head({title:'INEMA Cursos — laboratório progressivo',description:'Mini-site didático para comparar fluxo humano, agente visual e chamada WebMCP estruturada.',depth:'..'})}
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+${nav('..')}
+<main id="conteudo" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <header class="mb-10"><p class="text-emerald-400 text-sm font-semibold">LABORATÓRIO DO MÓDULO 1.1</p><h1 class="text-4xl font-bold mt-2">INEMA Cursos</h1><p class="text-neutral-300 mt-4 max-w-3xl">Use a mesma busca em três modos. O painel mostra o que muda entre operar a interface e invocar uma capacidade estruturada.</p></header>
+  <div class="bg-primary/10 border border-primary/30 rounded-xl p-5 mb-8"><strong class="text-primary">Ambiente didático:</strong><span class="text-neutral-300"> a chamada do agente é simulada e identificada. Quando <code>document.modelContext</code> existir, a página também tenta registrar a tool real.</span></div>
+  <div class="flex flex-wrap gap-2 mb-7" role="group" aria-label="Modo do laboratório"><button class="lab-mode px-4 py-3 rounded-lg bg-emerald-600 text-white" data-lab-mode="humano" aria-pressed="true">1 · Pessoa</button><button class="lab-mode px-4 py-3 rounded-lg bg-dark-700" data-lab-mode="visual" aria-pressed="false">2 · Agente visual</button><button class="lab-mode px-4 py-3 rounded-lg bg-dark-700" data-lab-mode="webmcp" aria-pressed="false">3 · WebMCP</button></div>
+  <div class="grid lg:grid-cols-[1fr_.9fr] gap-8 items-start">
+    <section class="bg-dark-800 border border-dark-600 rounded-xl overflow-hidden"><div class="p-5 border-b border-dark-600"><h2 class="text-2xl font-bold">Buscar cursos</h2><p id="lab-instruction" class="text-sm text-neutral-400 mt-2">Preencha os campos e faça a busca como uma pessoa.</p></div><form id="course-search" class="p-6 space-y-5"><label class="block font-medium" for="lab-theme">Tema</label><input id="lab-theme" name="tema" value="WebMCP" class="w-full px-4 py-3 rounded-lg bg-dark-700 border border-dark-600"><label class="block font-medium" for="lab-level">Nível</label><select id="lab-level" name="nivel" class="w-full px-4 py-3 rounded-lg bg-dark-700 border border-dark-600"><option value="iniciante">Iniciante</option><option value="intermediario">Intermediário</option><option value="avancado">Avançado</option></select><div class="flex justify-start gap-3"><button id="lab-action" type="submit" class="px-5 py-3 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-semibold">Buscar como pessoa</button><button id="lab-reset" type="button" class="px-5 py-3 rounded-lg bg-dark-700 hover:bg-dark-600">Reiniciar</button></div></form><div id="course-results" class="p-6 border-t border-dark-600" aria-live="polite"><p class="text-neutral-400">Nenhuma busca executada.</p></div></section>
+    <aside class="space-y-6"><section class="bg-dark-800 border border-dark-600 rounded-xl p-6"><div class="flex justify-between gap-4"><h2 class="text-xl font-bold">Traço da execução</h2><span id="native-status" class="text-xs text-neutral-400">Detectando API…</span></div><ol id="execution-trace" class="mt-5 space-y-3 text-sm text-neutral-300"><li>Escolha um modo para começar.</li></ol></section><section class="bg-dark-800 border border-dark-600 rounded-xl p-6"><p class="text-xs text-sky-400 font-semibold">CHAMADA / RETORNO</p><pre id="structured-call" class="code-shell mt-4"><code>—</code></pre></section><a href="../curso/builder/modulo-1-1.html#topico-6" class="inline-flex px-5 py-3 rounded-lg border border-emerald-500/30 text-emerald-400">Voltar ao projeto do módulo</a></aside>
+  </div>
+</main>
+<footer class="border-t border-dark-600 py-8 mt-12"><div class="max-w-6xl mx-auto px-4 text-sm text-neutral-500">INEMA Cursos · simulação didática + enhancement progressivo</div></footer>
+${scripts('..')}
+<script src="../assets/inema-cursos.js"></script>
 </body></html>`;
 }
 
@@ -437,4 +493,5 @@ ${scripts('..')}
 writeFileSync(resolve(root, 'index.html'), indexPage());
 for (const [i, module] of modules.entries()) writeFileSync(resolve(outDir, `modulo-${module.id}.html`), modulePage(module, i));
 writeFileSync(resolve(root, 'labs/validador-tools.html'), labPage());
-console.log(`Curso gerado: index + ${modules.length} módulos + laboratório.`);
+writeFileSync(resolve(root, 'labs/inema-cursos.html'), learningLabPage());
+console.log(`Curso gerado: index + ${modules.length} módulos + 2 laboratórios.`);
