@@ -208,7 +208,7 @@
     <button type="button" data-inema-doubt-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-dark-700 border border-dark-600 text-neutral-300 self-start"><span aria-hidden="true">?</span><span>Tenho dúvida</span></button>
   </div>
   <div class="inema-prose">
-    <p data-inema-block="m1-4-t1-p1" class="text-neutral-300 mb-6 leading-relaxed"><strong class="text-emerald-400">O que é:</strong> document.modelContext.registerTool recebe name, title opcional, description, inputSchema, execute e annotations opcionais.</p>
+    <p data-inema-block="m1-4-t1-p1" class="text-neutral-300 mb-6 leading-relaxed"><strong class="text-emerald-400">O que é:</strong> <code>document.modelContext.registerTool()</code> recebe <code>name</code>, título, descrição, schema, execução e anotações. O nome tem de usar apenas letras ASCII, números, sublinhado, hífen ou ponto e possuir de 1 a 128 caracteres.</p>
     <p data-inema-block="m1-4-t1-p2" class="text-neutral-300 mb-6 leading-relaxed"><strong class="text-emerald-400">Por que aprender:</strong> A forma imperativa atende jornadas que não cabem num formulário ou dependem de lógica e estado ricos.</p>
   </div>
   <div class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-4 overflow-hidden">
@@ -235,6 +235,10 @@
   title: 'Buscar cursos',
   description: 'Busca cursos por tema e nível.',
   inputSchema: { type: 'object', properties: {} },
+  annotations: {
+    readOnlyHint: true,
+    untrustedContentHint: false
+  },
   execute: async (input, { signal }) =&gt; buscar(input, signal)
 });</code></pre>
   <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6"><h3 class="text-lg font-semibold text-primary mb-3">Dica prática</h3><p class="text-neutral-300">Copie o exemplo, rode primeiro com dados locais e só depois conecte o backend. Mantenha logs sem dados pessoais e provoque pelo menos uma falha.</p></div>
@@ -469,10 +473,14 @@ registro.abort('Tela encerrada');</code></pre>
     <h3 class="text-lg font-semibold text-emerald-400 mb-3">Conceito aplicado</h3>
     <p data-inema-block="m1-4-t5-p3" class="text-neutral-300">O contrato deve ser compreensível por quem usa, testável por quem desenvolve e limitado por quem opera. A ferramenta não substitui autorização, validação nem experiência visual.</p>
   </div>
-  <pre class="code-shell mb-6"><code>const tools = await document.modelContext.getTools();
+  <pre class="code-shell mb-6"><code>const tools = await document.modelContext.getTools({
+  fromOrigins: [location.origin]
+});
 const buscar = tools.find((tool) =&gt; tool.name === 'buscar_cursos');
+if (!buscar) throw new Error('Tool indisponível neste contexto');
 const raw = await document.modelContext.executeTool(buscar, { tema: 'WebMCP' });
 console.log(JSON.parse(raw));</code></pre>
+  <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6"><h3 class="text-lg font-semibold text-primary mb-3">Leia as anotações</h3><p class="text-neutral-300"><code>readOnlyHint</code> sinaliza ausência de mutação; <code>untrustedContentHint</code> avisa que a resposta exige tratamento reforçado. São sinais para o agente, não substitutos de autorização, validação ou sanitização.</p></div>
   <div class="bg-primary/10 rounded-xl border border-primary/30 p-6 mb-6"><h3 class="text-lg font-semibold text-primary mb-3">Dica prática</h3><p class="text-neutral-300">Copie o exemplo, rode primeiro com dados locais e só depois conecte o backend. Mantenha logs sem dados pessoais e provoque pelo menos uma falha.</p></div>
   <div class="bg-dark-800 rounded-xl border border-dark-600 p-6 mb-6">
     <h3 class="text-lg font-semibold mb-4">Checklist operacional</h3>
@@ -566,7 +574,7 @@ consultar_disponibilidade({ cursoId, turmaId })
   <div class="flex justify-start mt-7"><button type="button" data-inema-read-toggle aria-pressed="false" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/30"><span class="inema-read-icon" aria-hidden="true">○</span><span data-inema-read-label>Marcar como lido</span></button></div>
 </section>
       <section class="mb-12"><div class="bg-gradient-to-br from-emerald-900/40 via-dark-800 to-dark-800 rounded-xl border border-emerald-500/30 p-8"><h2 class="text-2xl font-bold mb-6">📦 Entrega do módulo</h2><p class="text-neutral-300 mb-6">Entregar buscar_cursos, consultar_curso e consultar_disponibilidade, todas modificando a interface e retornando dados estruturados.</p><div class="grid md:grid-cols-2 gap-6 mb-8"><div class="bg-emerald-900/20 border border-emerald-500/30 rounded-xl p-5"><h3 class="text-emerald-400 font-semibold">Critério de aceite</h3><p class="text-neutral-300 text-sm mt-2">A entrega funciona com suporte WebMCP e mantém o caminho manual quando a API não existe.</p></div><div class="bg-sky-900/20 border border-sky-500/30 rounded-xl p-5"><h3 class="text-sky-400 font-semibold">Evidência</h3><p class="text-neutral-300 text-sm mt-2">Inclua código, cenário testado, resultado observado e uma limitação conhecida.</p></div></div><div class="flex justify-start flex-wrap gap-3"><a href="../../index.html" class="px-5 py-3 rounded-lg bg-dark-700 hover:bg-dark-600">← Voltar para a trilha</a><a href="../../labs/validador-tools.html" class="px-5 py-3 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white">Validar catálogo final →</a></div></div></section>
-      <section class="border border-dark-600 rounded-xl p-6"><h2 class="text-xl font-bold">Fontes técnicas</h2><ul class="mt-4 space-y-2 text-sm"><li><a class="text-sky-400 hover:text-sky-300" href="https://github.com/webmachinelearning/webmcp" target="_blank" rel="noreferrer">Draft e repositório oficial WebMCP</a></li><li><a class="text-sky-400 hover:text-sky-300" href="https://webmachinelearning.github.io/webmcp/" target="_blank" rel="noreferrer">Especificação renderizada</a></li><li class="text-neutral-400">A API declarativa ainda possui pontos em debate; valide o draft antes de produção.</li></ul></section>
+      <section class="border border-dark-600 rounded-xl p-6"><h2 class="text-xl font-bold">Fontes técnicas</h2><ul class="mt-4 space-y-2 text-sm"><li><a class="text-sky-400 hover:text-sky-300" href="https://github.com/webmachinelearning/webmcp" target="_blank" rel="noreferrer">Draft e repositório oficial WebMCP</a></li><li><a class="text-sky-400 hover:text-sky-300" href="https://webmachinelearning.github.io/webmcp/" target="_blank" rel="noreferrer">Especificação renderizada</a></li><li class="text-neutral-400">Snapshot oficial: 26/08/2026 · commit 41d12f0. A API declarativa permanece experimental; valide o draft antes de produção.</li></ul></section>
     </article>
   </div>
 </main>
