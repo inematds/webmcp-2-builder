@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "courseId": "webmcp-zero-expert",
+  "repository": "webmcp-2-builder",
+  "phase": "builder",
+  "order": 1,
+  "previous": "webmcp-1-formacao",
+  "next": "webmcp-3-integrator",
+  "destination": "webmcp-6-agent-hub",
+  "progress": {
+    "namespace": "inema.webmcp-zero-expert.*",
+    "sameOrigin": "automatic-localStorage",
+    "fallback": "json-merge",
+    "crossOriginFuture": "signed-handoff"
+  }
+}
