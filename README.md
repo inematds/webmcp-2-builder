@@ -53,7 +53,7 @@ O scanner é local, determinístico e não registra nem executa tools. Campos de
 
 ## Especificação e limites
 
-WebMCP permanece em evolução. O conteúdo foi conferido em 30 de agosto de 2026 contra o [repositório oficial WebMCP](https://github.com/webmachinelearning/webmcp), a [especificação renderizada](https://webmachinelearning.github.io/webmcp/) e o [explainer da API declarativa](https://github.com/webmachinelearning/webmcp/blob/main/declarative-api-explainer.md).
+WebMCP permanece em evolução. O conteúdo foi conferido em 24 de setembro de 2026 (draft de 17/09/2026) contra o [repositório oficial WebMCP](https://github.com/webmachinelearning/webmcp), a [especificação renderizada](https://webmachinelearning.github.io/webmcp/) e o [explainer da API declarativa](https://github.com/webmachinelearning/webmcp/blob/main/declarative-api-explainer.md).
 
 O curso ensina `document.modelContext`, `registerTool()`, `getTools()`, `executeTool()` e ciclo de vida por `AbortSignal`. Não trata WebMCP como substituto do backend, de autorização ou de MCP.
 
@@ -66,3 +66,15 @@ Consulte [o contrato de entrega e passagem](docs/entrega-e-progressao.md).
 ## Licença
 
 Código sob licença MIT. Conteúdo educacional © INEMA.
+
+## Laboratório de ações encadeadas
+
+Abra `labs/jornada-estudos.html` para buscar, filtrar, adicionar e conferir uma lista de estudos fictícia. Interface e ferramentas compartilham operações validadas. A sequência local é um roteiro determinístico, sem modelo de IA; o registro nativo é detectado separadamente. Veja [método e evidências](docs/validacao-jornada.md).
+
+O validador considera as quatro annotations opcionais do draft: `readOnlyHint`, `untrustedContentHint`, `consequentialHint` e `debugging`. Hints não são autorização.
+
+## Mais no INEMA.CLUB
+
+- [Ficha completa](https://www.inema.club/cursos/247-formacao-webmcp-2-builder/)
+- [Guia de aprendizagem](https://www.inema.club/aprender-inteligencia-artificial/)
+- [Catálogo de cursos](https://www.inema.club/cursos/)

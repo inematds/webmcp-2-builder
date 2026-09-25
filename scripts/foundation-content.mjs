@@ -9,7 +9,7 @@ export const foundationSections = String.raw`
   </div>
   <div class="inema-prose">
     <p data-inema-block="m1-1-t1-p1" class="text-neutral-300 mb-5 leading-relaxed"><strong class="text-emerald-400">O que é:</strong> um mesmo objetivo pode ser alcançado por caminhos diferentes. Nosso exemplo será o site fictício <strong>INEMA Cursos</strong>, no qual alguém quer encontrar um curso de WebMCP para iniciante.</p>
-    <p data-inema-block="m1-1-t1-p2" class="text-neutral-300 mb-6 leading-relaxed"><strong class="text-emerald-400">Por que aprender:</strong> se você começa pela sintaxe, WebMCP parece apenas mais uma API. Quando começa pela jornada, percebe a mudança: o agente deixa de adivinhar controles e passa a conversar com uma capacidade declarada.</p>
+    <p data-inema-block="m1-1-t1-p2" class="text-neutral-300 mb-6 leading-relaxed"><strong class="text-emerald-400">Por que aprender:</strong> se você começa pela sintaxe, WebMCP parece apenas mais uma API. Quando começa pela jornada, percebe a mudança: agentes de navegador e tecnologias assistivas deixam de depender apenas da interpretação visual e passam a conversar com uma capacidade declarada.</p>
   </div>
   <div class="bg-dark-800 border border-dark-600 rounded-xl overflow-hidden mb-6" aria-label="Recriação ilustrativa do site INEMA Cursos">
     <div class="px-5 py-3 border-b border-dark-600 flex items-center justify-between">

@@ -94,8 +94,9 @@
     const name = text(tool.name);
     if (name) out.push(finding('pass', scope, 'Nome presente', `Identificador: ${name}.`, '', 5, 5));
     else out.push(finding('fail', scope, 'Nome obrigatório ausente', 'registerTool rejeita nome vazio.', 'Defina um identificador único e estável.', 5, 0));
+    if (name && !/^[A-Za-z0-9_.-]{1,128}$/.test(name)) out.push(finding('fail', scope, 'Nome fora do draft', 'Use de 1 a 128 caracteres ASCII alfanuméricos, ponto, hífen ou underscore.', 'Ajuste o identificador.', 5, 0));
     if (name && /^[a-z][a-z0-9_\-]*$/.test(name)) out.push(finding('pass', scope, 'Nome previsível', 'O identificador é simples para logs e chamadas.', '', 2, 2));
-    else if (name) out.push(finding('warn', scope, 'Convenção de nome inconsistente', 'A especificação exige apenas string não vazia; esta é uma recomendação de qualidade.', 'Prefira minúsculas com underscore ou hífen.', 2, 1));
+    else if (name) out.push(finding('warn', scope, 'Convenção de nome inconsistente', 'O draft aceita de 1 a 128 caracteres ASCII alfanuméricos, ponto, hífen ou underscore; minúsculas são uma convenção local.', 'Prefira minúsculas com underscore ou hífen.', 2, 1));
     if (name && allNames.filter(x => x === name).length > 1) out.push(finding('fail', scope, 'Nome duplicado', 'O mesmo catálogo registra duas tools com o mesmo nome.', 'Torne cada responsabilidade e nome únicos.', 5, 0));
     else out.push(finding('pass', scope, 'Nome único no catálogo', 'Nenhuma colisão foi encontrada.', '', 5, 5));
 
@@ -109,8 +110,15 @@
     out.push(...schemaChecks(tool, scope));
 
     const annotations = tool.annotations;
-    if (annotations && typeof annotations.readOnlyHint === 'boolean' && typeof annotations.untrustedContentHint === 'boolean') out.push(finding('pass', scope, 'Annotations explícitas', 'readOnlyHint e untrustedContentHint foram declarados.', '', 6, 6));
-    else out.push(finding('warn', scope, 'Annotations incompletas', 'Hints ajudam agentes e revisores, mas não são autorização.', 'Declare os dois booleanos de acordo com o comportamento real.', 6, 2));
+    const knownHints = ['readOnlyHint', 'untrustedContentHint', 'consequentialHint', 'debugging'];
+    if (annotations === undefined) out.push(finding('info', scope, 'Annotations opcionais ausentes', 'O draft assume false para os quatro hints. Ausência não invalida o contrato.', 'Documente o comportamento real quando isso ajudar a revisão.', 6, 6));
+    else if (!annotations || typeof annotations !== 'object' || Array.isArray(annotations) || Object.entries(annotations).some(([key, value]) => knownHints.includes(key) && typeof value !== 'boolean')) out.push(finding('fail', scope, 'Annotations inválidas', 'Annotations deve ser objeto e cada hint conhecido deve ser booleano.', 'Use true ou false; não use strings.', 6, 0));
+    else {
+      const unknown = Object.keys(annotations).filter(key => !knownHints.includes(key));
+      out.push(finding(unknown.length ? 'warn' : 'pass', scope, 'Annotations do draft', unknown.length ? 'Campos fora do snapshot: ' + unknown.join(', ') : 'Hints válidos; campos omitidos assumem false. Não comprovam segurança nem autorização.', unknown.length ? 'Separe extensões locais dos quatro hints do draft de 17/09/2026.' : '', 6, unknown.length ? 3 : 6));
+      if (annotations.readOnlyHint === true && tool.risk?.effect === 'write') out.push(finding('fail', scope, 'Leitura declarada com efeito de escrita', 'Alterar a interface também é mutação de estado.', 'Marque readOnlyHint como false e revise o efeito.', 6, 0));
+      if (annotations.consequentialHint === true && tool.risk?.humanConfirmation !== true) out.push(finding('fail', scope, 'Ação consequente sem confirmação documentada', 'O hint não implementa confirmação por conta própria.', 'Documente como a pessoa aprova a consequência antes da execução.', 6, 0));
+    }
 
     if (text(tool.executeBehavior).length >= 30) out.push(finding('pass', scope, 'Execução documentada', tool.executeBehavior, '', 7, 7));
     else out.push(finding('warn', scope, 'Comportamento de execute pouco auditável', 'JSON não carrega funções; precisamos de uma descrição do efeito.', 'Descreva consulta/mutação, atualização da UI, backend e erros.', 7, 2));

@@ -6,6 +6,7 @@ const pages = [
   'index.html',
   'labs/validador-tools.html',
   'labs/inema-cursos.html',
+  'labs/jornada-estudos.html',
   'curso/builder/modulo-1-1.html',
   'curso/builder/modulo-1-2.html',
   'curso/builder/modulo-1-3.html',
@@ -64,4 +65,4 @@ if (errors.length) {
   console.error(errors.join('\n'));
   process.exit(1);
 }
-console.log(`OK: ${pages.length} páginas, 4 módulos, 24 tópicos, 2 laboratórios e manifesto consistente.`);
+console.log(`OK: ${pages.length} páginas, 4 módulos, 24 tópicos, 3 laboratórios e manifesto consistente.`);

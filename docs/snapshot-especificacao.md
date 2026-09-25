@@ -1,6 +1,6 @@
 # Snapshot técnico usado no curso
 
-Data de conferência: **30 de agosto de 2026**.
+Data de conferência: **24 de setembro de 2026 (draft de 17/09/2026)**.
 
 ## Superfície imperativa
 
@@ -12,7 +12,7 @@ getTools(options)
 executeTool(registeredTool, inputObject, options)
 ```
 
-Uma `ModelContextTool` possui `name`, `title` opcional, `description`, `inputSchema` opcional, `execute` e `annotations` opcionais. As annotations atuais são `readOnlyHint` e `untrustedContentHint`.
+Uma `ModelContextTool` possui `name`, `title` opcional, `description`, `inputSchema` opcional, `execute` e `annotations` opcionais. As annotations atuais são `readOnlyHint`, `untrustedContentHint`, `consequentialHint` e `debugging`. São opcionais, booleanas e assumem `false` quando omitidas. Não comprovam autorização ou segurança. `consequentialHint` sinaliza ações significativas ou irreversíveis; `debugging` identifica ferramentas de depuração. Suporte ao draft precisa ser verificado no ambiente de execução.
 
 O `signal` fornecido a `registerTool` remove a tool quando abortado. O callback `execute` recebe outro `AbortSignal` para cancelamento da chamada em andamento.
 

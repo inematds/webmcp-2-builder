@@ -209,3 +209,30 @@ html:not(.dark) svg[role="img"] { filter: saturate(.82) brightness(.96); }
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+
+/* Laboratório de ações encadeadas: extensão do tema existente. */
+.journey-shell { max-width: 1160px; margin: auto; padding: 40px 24px; }
+.journey-shell h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 750; line-height: 1.12; max-width: 22ch; }
+.journey-shell h2 { font-size: 1.35rem; font-weight: 700; margin: 32px 0 16px; }
+.journey-shell p { max-width: 72ch; line-height: 1.7; margin: 16px 0; }
+.journey-shell a { text-decoration: underline; text-underline-offset: 3px; }
+.journey-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin: 24px 0 48px; }
+.journey-columns > section { min-width: 0; }
+.journey-shell input:not([type=checkbox]), .journey-shell select { width: 100%; background: transparent; border: 1px solid #64748b; border-radius: 8px; padding: 12px; color: inherit; margin: 8px 0 16px; }
+.journey-shell option { color: #111827; }
+.journey-shell label { display: block; }
+.journey-check { margin: 8px 0 20px; }
+.journey-check input { margin-right: 8px; }
+.journey-shell button { border: 1px solid #047857; background: #047857; color: white; border-radius: 8px; padding: 10px 16px; min-height: 44px; cursor: pointer; }
+.journey-shell button:hover { background: #065f46; }
+.journey-shell button:disabled { background: #374151; border-color: #64748b; cursor: default; }
+.journey-shell .journey-secondary { background: transparent; color: inherit; border-color: #64748b; margin-top: 8px; }
+.journey-shell :focus-visible { outline: 3px solid #38bdf8; outline-offset: 3px; }
+.journey-results { list-style: none; padding: 0; }
+.journey-results li { display: flex; gap: 16px; align-items: center; justify-content: space-between; padding: 18px 0; border-bottom: 1px solid #64748b; }
+.journey-results button { flex-shrink: 0; }
+.journey-trace { list-style: decimal; padding-left: 24px; font: .85rem/1.65 ui-monospace, monospace; overflow-wrap: anywhere; }
+.journey-trace li { margin: 12px 0; }
+.journey-shell blockquote { margin: 20px 0; font-size: 1.15rem; line-height: 1.6; }
+.journey-reading { border-top: 1px solid #64748b; padding-top: 16px; }
+@media (max-width: 760px) { .journey-columns { grid-template-columns: 1fr; gap: 8px; } .journey-shell { padding: 28px 18px; } .journey-results li { align-items: flex-start; flex-direction: column; } }

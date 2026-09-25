@@ -1,0 +1,56 @@
+{
+  "date": "2026-09-25T01:26:43.168Z",
+  "browser": "153.0.8010.36",
+  "flags": [
+    "disable-gpu",
+    "disable-software-rasterizer",
+    "enable-features=WebMCP"
+  ],
+  "method": "Controles automatizados versus callbacks locais; sem modelo de IA ou medição de tokens.",
+  "trials": [
+    {
+      "width": 1440,
+      "controlsMs": 151.95742699999983,
+      "callbacksMs": 38.3101630000001,
+      "finalList": "Primeiros passos com agentes • Agentes no dia a dia",
+      "equivalent": true,
+      "repeatedWithoutDuplicates": true,
+      "errors": []
+    },
+    {
+      "width": 390,
+      "controlsMs": 136.30204399999957,
+      "callbacksMs": 41.29786799999965,
+      "finalList": "Primeiros passos com agentes • Agentes no dia a dia",
+      "equivalent": true,
+      "repeatedWithoutDuplicates": true,
+      "errors": []
+    }
+  ],
+  "native": {
+    "available": true,
+    "inputTransport": "JSON serializado, exigido por esta implementação experimental",
+    "names": [
+      "adicionar_estudos",
+      "buscar_cursos",
+      "consultar_jornada",
+      "filtrar_cursos"
+    ],
+    "final": {
+      "visiveis": [
+        "a1",
+        "a2"
+      ],
+      "lista": [
+        "a1",
+        "a2"
+      ]
+    },
+    "visibleList": "Primeiros passos com agentes • Agentes no dia a dia"
+  },
+  "integration": {
+    "stubLifecycle": "pass",
+    "partialRegistrationRollback": "pass",
+    "validatorAnnotations": "pass"
+  }
+}
