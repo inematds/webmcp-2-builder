@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="Hands-on WebMCP Builder training with four modules, labs, and an advanced tool and schema validator." name="description"/>
+<meta content="webmcp-zero-expert" name="inema-course"/>
+<script>
+    (function(){try{var h=document.documentElement,p=JSON.parse(localStorage.getItem('inema.prefs')||'{}'),t=p.theme||(localStorage.getItem('theme')==='light'?'claro':'inema-dark');if(t==='claro'||t==='sepia')h.classList.remove('dark');else h.classList.add('dark');if(['sepia','foco','contraste'].includes(t))h.setAttribute('data-theme',t);else h.removeAttribute('data-theme');if(p.fontScale)h.style.fontSize=p.fontScale+'%';}catch(e){document.documentElement.classList.add('dark')}})();
+  </script>
+<title>Training 2 | WebMCP Builder</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={darkMode:'class',theme:{extend:{colors:{primary:'#FACC15',dark:{900:'#111827',800:'#1f2937',700:'#374151',600:'#4b5563'}}}}};</script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="../favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="../assets/site.css" rel="stylesheet"/>
+<link href="../assets/learn.css" rel="stylesheet"/>
+<script data-inema-manifest="" type="application/json">
+{
+  "course": "webmcp-zero-expert",
+  "tracks": [
+    {
+      "n": "1",
+      "title": "WebMCP Builder",
+      "modules": [
+        {
+          "id": "1-1",
+          "title": "WebMCP, MCP e a Web agêntica",
+          "topics": 6,
+          "href": "https://inematds.github.io/webmcp-2-builder/curso/builder/modulo-1-1.html"
+        },
+        {
+          "id": "1-2",
+          "title": "Ambiente de desenvolvimento",
+          "topics": 6,
+          "href": "https://inematds.github.io/webmcp-2-builder/curso/builder/modulo-1-2.html"
+        },
+        {
+          "id": "1-3",
+          "title": "API declarativa experimental",
+          "topics": 6,
+          "href": "https://inematds.github.io/webmcp-2-builder/curso/builder/modulo-1-3.html"
+        },
+        {
+          "id": "1-4",
+          "title": "API imperativa",
+          "topics": 6,
+          "href": "https://inematds.github.io/webmcp-2-builder/curso/builder/modulo-1-4.html"
+        }
+      ]
+    },
+    {
+      "n": "2",
+      "title": "WebMCP Integrator",
+      "modules": [
+        {
+          "id": "2-5",
+          "title": "Boas ferramentas",
+          "topics": 6,
+          "href": "https://inematds.github.io/webmcp-3-integrator/"
+        },
+        {
+          "id": "2-6",
+          "title": "Estado, erros e recuperação",
+          "topics": 6,
+          "href": "https://inematds.github.io/webmcp-3-integrator/"
+        },
+        {
+          "id": "2-7",
+          "title": "Sites existentes",
+          "topics": 6,
+          "href": "https://inematds.github.io/webmcp-3-integrator/"
+        },
+        {
+          "id": "2-8",
+          "title": "Frameworks modernos",
+          "topics": 6,
+          "href": "https://inematds.github.io/webmcp-3-integrator/"
+        }
+      ]
+    },
+    {
+      "n": "3",
+      "title": "WebMCP Agent Developer",
+      "modules": [
+        {
+          "id": "3-9",
+          "title": "Descoberta de ferramentas",
+          "topics": 6,
+          "href": "https://inematds.github.io/webmcp-4-agent-developer/"
+        },
+        {
+          "id": "3-10",
+          "title": "Execução de ferramentas",
+          "topics": 6,
+          "href": "https://inematds.github.io/webmcp-4-agent-developer/"
+        },
+        {
+          "id": "3-11",
+          "title": "Cross-origin e permissões",
+          "topics": 6,
+          "href": "https://inematds.github.io/webmcp-4-agent-developer/"
+        },
+        {
+          "id": "3-12",
+          "title": "Loop conversacional",
+          "topics": 6,
+          "href": "https://inematds.github.io/webmcp-4-agent-developer/"
+        }
+      ]
+    },
+    {
+      "n": "4",
+      "title": "WebMCP Expert",
+      "modules": [
+        {
+          "id": "4-13",
+          "title": "Segurança",
+          "topics": 6,
+          "href": "https://inematds.github.io/webmcp-5-expert/"
+        },
+        {
+          "id": "4-14",
+          "title": "WebMCP, backend e MCP",
+          "topics": 6,
+          "href": "https://inematds.github.io/webmcp-5-expert/"
+        },
+        {
+          "id": "4-15",
+          "title": "Evals e observabilidade",
+          "topics": 6,
+          "href": "https://inematds.github.io/webmcp-5-expert/"
+        },
+        {
+          "id": "4-16",
+          "title": "Produção e governança",
+          "topics": 6,
+          "href": "https://inematds.github.io/webmcp-5-expert/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<link href="https://inematds.github.io/webmcp-2-builder/" hreflang="pt-BR" rel="alternate"/><link href="https://inematds.github.io/webmcp-2-builder/en/" hreflang="en" rel="alternate"/><link href="https://inematds.github.io/webmcp-2-builder/es/" hreflang="es" rel="alternate"/></head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen"><div class="inema-lang" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:2px;padding:4px;border-radius:10px;background:rgba(12,12,16,.82);border:1px solid rgba(226,162,59,.45);font:600 12px/1 Sora,Inter,system-ui,sans-serif;backdrop-filter:blur(8px)" translate="no"><a href="../" hreflang="pt-BR" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">PT</a><a href="./" hreflang="en" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#1a1206;background:#E2A23B">EN</a><a href="../es/" hreflang="es" style="padding:6px 8px;border-radius:7px;text-decoration:none;color:#e9e9ee">ES</a></div>
+<a class="skip" href="#conteudo">Skip to content</a>
+<nav aria-label="Main navigation" class="sticky top-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-600">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center min-h-16 gap-3">
+<div class="flex items-center gap-3 min-w-0">
+<a aria-label="WebMCP Builder — start" class="flex items-center gap-2 text-yellow-400 hover:text-yellow-300 flex-shrink-0" href="../index.html">
+<span aria-hidden="true" class="text-2xl">⬡</span><span class="font-bold hidden sm:inline">WebMCP Builder</span><span class="font-bold sm:hidden">W2</span>
+</a>
+<span class="text-neutral-600 hidden sm:inline">|</span>
+<a class="text-sky-400 hover:text-sky-300 text-sm font-medium hidden sm:inline" href="https://inema.club" rel="noreferrer" target="_blank">INEMA.CLUB</a>
+</div>
+<div class="flex items-center gap-1">
+<div class="hidden lg:flex items-center gap-1">
+<a aria-current="page" class="phase-chip px-2.5 py-1.5 rounded-lg text-sm font-semibold" href="../index.html#capitulo-1">Ch. 1<span class="hidden xl:inline"> · Fundamentals</span></a>
+<a class="phase-chip px-2.5 py-1.5 rounded-lg text-sm text-neutral-400 hover:text-emerald-400" href="../index.html#capitulo-2">Ch. 2<span class="hidden xl:inline"> · Design</span></a>
+<a class="phase-chip px-2.5 py-1.5 rounded-lg text-sm text-neutral-400 hover:text-emerald-400" href="../index.html#capitulo-3">Ch. 3<span class="hidden xl:inline"> · Integration</span></a>
+<a class="phase-chip px-2.5 py-1.5 rounded-lg text-sm text-neutral-400 hover:text-emerald-400" href="../index.html#capitulo-4">Ch. 4<span class="hidden xl:inline"> · Quality</span></a>
+<a class="phase-chip px-2.5 py-1.5 rounded-lg text-sm text-sky-400 hover:text-sky-300" href="../labs/validador-tools.html">Laboratories</a>
+</div>
+<button aria-label="Open my learning journey" class="p-2 rounded-lg text-neutral-300 hover:bg-dark-700" data-inema-journey-open="" type="button"><span aria-hidden="true">◷</span><span class="inema-journey-badge" data-count="0" data-inema-journey-badge=""></span></button>
+<div class="relative">
+<button aria-expanded="false" aria-label="Adjust appearance" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600" data-inema-appearance-toggle="[data-inema-appearance]" type="button">◑</button>
+<div class="inema-appearance-pop right-0 mt-3" data-inema-appearance="">
+<p class="text-sm font-semibold mb-2">Theme</p>
+<div class="inema-segment"><button data-inema-set-theme="inema-dark">Dark</button><button data-inema-set-theme="claro">Light</button><button data-inema-set-theme="sepia">Sepia</button><button data-inema-set-theme="foco">Focus</button><button data-inema-set-theme="contraste">Contrast</button></div>
+<p class="text-sm font-semibold mt-4 mb-2">Size</p>
+<div class="inema-segment"><button data-inema-set-fontscale="100">A</button><button data-inema-set-fontscale="112">A+</button><button data-inema-set-fontscale="125">A++</button></div>
+</div>
+</div>
+<button aria-label="Toggle light and dark themes" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600" id="theme-toggle">
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-dark-icon" viewbox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+<svg class="hidden w-5 h-5 text-neutral-300" fill="currentColor" id="theme-toggle-light-icon" viewbox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+</button>
+</div>
+</div>
+<div aria-label="WebMCP Builder Chapters" class="lg:hidden flex items-center gap-1 overflow-x-auto pb-2">
+<a aria-current="page" class="phase-chip flex-shrink-0 px-3 py-2 rounded-lg text-xs font-semibold" href="../index.html#capitulo-1">Ch. 1</a>
+<a class="phase-chip flex-shrink-0 px-3 py-2 rounded-lg text-xs text-neutral-400 hover:text-emerald-400" href="../index.html#capitulo-2">Ch. 2</a>
+<a class="phase-chip flex-shrink-0 px-3 py-2 rounded-lg text-xs text-neutral-400 hover:text-emerald-400" href="../index.html#capitulo-3">Ch. 3</a>
+<a class="phase-chip flex-shrink-0 px-3 py-2 rounded-lg text-xs text-neutral-400 hover:text-emerald-400" href="../index.html#capitulo-4">Ch. 4</a>
+<a class="phase-chip flex-shrink-0 px-3 py-2 rounded-lg text-xs text-sky-400" href="../labs/validador-tools.html">Labs</a>
+</div>
+</div>
+</nav>
+<main id="conteudo">
+<header class="hero-shell builder-hero border-b border-dark-600">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 lg:py-20 grid lg:grid-cols-[.9fr_1.1fr] gap-12 items-center">
+<div><span class="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-semibold rounded-full mb-4">TRAINING 2 · PHASE 1</span><h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight">WebMCP Builder</h1><p class="text-lg text-neutral-300 mt-5 leading-relaxed">Move beyond diagnosis and turn a website into a structured, visible, and controllable tool surface.</p><div class="flex justify-start flex-wrap gap-3 mt-7"><a class="px-5 py-3 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-semibold" href="#mapa">Start the course</a><a class="px-5 py-3 rounded-lg border border-sky-500/30 text-sky-400 hover:bg-sky-500/10 font-semibold" href="../labs/validador-tools.html">Open advanced scanner</a></div></div>
+<div class="rounded-2xl border border-emerald-500/30 bg-dark-900/40 p-4 overflow-hidden">
+<svg aria-label="Flow: Current site to WebMCP tools for agent + person" class="w-full h-auto" role="img" viewbox="0 0 900 260">
+<defs>
+<lineargradient id="builder-hero-grad" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#34d399"></stop><stop offset="1" stop-color="#10b981"></stop></lineargradient>
+<filter height="180%" id="builder-hero-glow" width="180%" x="-40%" y="-40%"><fegaussianblur result="b" stddeviation="1.8"></fegaussianblur><femerge><femergenode in="b"></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter>
+<pattern height="28" id="builder-hero-grid" patternunits="userSpaceOnUse" width="28"><circle cx="1.2" cy="1.2" fill="#34d399" opacity=".12" r="1.2"></circle></pattern>
+<marker id="builder-hero-arrow" markerheight="9" markerwidth="9" orient="auto" refx="7" refy="4.5"><path d="M0,0 L8,4.5 L0,9 L2.4,4.5 Z" fill="#38bdf8"></path></marker>
+</defs>
+<rect fill="url(#builder-hero-grid)" height="260" width="900"></rect>
+<path d="M250 130 H365 M535 130 H650" marker-end="url(#builder-hero-arrow)" opacity=".65" stroke="#38bdf8" stroke-width="1.8"></path>
+<g><rect fill="#0e2018" height="76" rx="14" stroke="#34d399" stroke-width="2" width="205" x="45" y="92"></rect><text fill="#34d399" font-family="Inter,sans-serif" font-size="17" font-weight="600" text-anchor="middle" x="147" y="125">Current site</text><text fill="#a7f3d0" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="147" y="148">observable input</text></g>
+<g filter="url(#builder-hero-glow)"><rect fill="url(#builder-hero-grad)" height="96" rx="14" stroke="#34d399" stroke-width="2" width="170" x="365" y="82"></rect></g><text fill="#06281d" font-family="Inter,sans-serif" font-size="17" font-weight="600" text-anchor="middle" x="450" y="125">WebMCP Tools</text><text fill="#064e3b" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="450" y="149">explicit contract</text>
+<g><rect fill="#0e1b26" height="76" rx="14" stroke="#38bdf8" stroke-width="2" width="205" x="650" y="92"></rect><text fill="#9ad6ff" font-family="Inter,sans-serif" font-size="17" font-weight="600" text-anchor="middle" x="752" y="125">Agent + person</text><text fill="#bfe6ff" font-family="Inter,sans-serif" font-size="12" text-anchor="middle" x="752" y="148">verifiable result</text></g>
+</svg>
+</div>
+</div>
+</header>
+<section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-12"><div class="bg-dark-800 p-4 rounded-xl border border-dark-600"><strong class="text-2xl text-emerald-400">4</strong><p class="text-sm text-neutral-400">Builder Chapters</p></div><div class="bg-dark-800 p-4 rounded-xl border border-dark-600"><strong class="text-2xl text-emerald-400">4</strong><p class="text-sm text-neutral-400">Available modules</p></div><div class="bg-dark-800 p-4 rounded-xl border border-dark-600"><strong class="text-2xl text-emerald-400">24</strong><p class="text-sm text-neutral-400">Published topics</p></div><div class="bg-dark-800 p-4 rounded-xl border border-dark-600"><strong class="text-2xl text-emerald-400">2</strong><p class="text-sm text-neutral-400">Laboratories</p></div></div>
+<div class="bg-dark-800 border border-emerald-500/30 rounded-xl p-6 mb-12"><div class="flex flex-col md:flex-row md:items-center justify-between gap-5"><div><p class="text-xs text-emerald-400 font-semibold">SHARED PROGRESS</p><h2 class="text-2xl font-bold mt-2">Your journey continues across repositories</h2><p class="text-neutral-400 mt-2">The same identifier as Formation 1 records completed items, questions, and notes. On GitHub Pages, the origin is shared; JSON keeps the fallback portable.</p></div><div class="inema-meter min-w-64" data-inema-meter="trilha:1"><div class="flex justify-between gap-3 text-sm text-neutral-400 mb-2"><span data-inema-meter-frac="">0 of 24</span><span data-inema-meter-pct="">0%</span></div><div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill=""></div></div></div></div></div>
+<section class="mb-12" id="mapa"><h2 class="text-2xl font-bold mb-2">Builder training roadmap</h2><p class="text-neutral-400 mb-6">The top navigation moves between chapters. Within each chapter, modules follow the chapter.module numbering.</p><div class="grid lg:grid-cols-2 gap-5"><article class="chapter-map bg-dark-800 border border-emerald-500/30 rounded-xl p-6" id="capitulo-1">
+<div class="flex flex-wrap items-start justify-between gap-4 mb-5"><div><p class="text-sm font-semibold text-emerald-400">CHAPTER 1</p><h3 class="text-xl font-bold mt-1">Fundamentals of the agentic web</h3><p class="text-sm text-neutral-400 mt-2 max-w-2xl">From the mental model to the first tool registered within a page.</p></div><span class="px-3 py-1 rounded-full text-xs bg-emerald-500/20 text-emerald-400">Available</span></div>
+<ol class="grid sm:grid-cols-2 gap-3"><li><a class="module-row flex gap-3 rounded-lg bg-dark-700/60 p-3 hover:bg-dark-700" href="../curso/builder/modulo-1-1.html"><strong class="text-emerald-400 text-sm">1.1</strong><span class="text-sm text-neutral-300">WebMCP, MCP, and the agentic web</span></a></li><li><a class="module-row flex gap-3 rounded-lg bg-dark-700/60 p-3 hover:bg-dark-700" href="../curso/builder/modulo-1-2.html"><strong class="text-emerald-400 text-sm">1.2</strong><span class="text-sm text-neutral-300">Development environment</span></a></li><li><a class="module-row flex gap-3 rounded-lg bg-dark-700/60 p-3 hover:bg-dark-700" href="../curso/builder/modulo-1-3.html"><strong class="text-emerald-400 text-sm">1.3</strong><span class="text-sm text-neutral-300">Experimental declarative API</span></a></li><li><a class="module-row flex gap-3 rounded-lg bg-dark-700/60 p-3 hover:bg-dark-700" href="../curso/builder/modulo-1-4.html"><strong class="text-emerald-400 text-sm">1.4</strong><span class="text-sm text-neutral-300">Imperative API</span></a></li></ol>
+</article>
+<article class="chapter-map bg-dark-800 border border-dark-600 rounded-xl p-6" id="capitulo-2">
+<div class="flex flex-wrap items-start justify-between gap-4 mb-5"><div><p class="text-sm font-semibold text-neutral-400">CHAPTER 2</p><h3 class="text-xl font-bold mt-1">Tool design</h3><p class="text-sm text-neutral-400 mt-2 max-w-2xl">Turn human journeys into clear, small, verifiable contracts.</p></div><span class="px-3 py-1 rounded-full text-xs bg-dark-700 text-neutral-400">Next</span></div>
+<ol class="grid sm:grid-cols-2 gap-3"><li><div class="module-row flex gap-3 rounded-lg bg-dark-700/30 p-3"><strong class="text-emerald-400 text-sm">2.1</strong><span class="text-sm text-neutral-300">From journey to intent</span></div></li><li><div class="module-row flex gap-3 rounded-lg bg-dark-700/30 p-3"><strong class="text-emerald-400 text-sm">2.2</strong><span class="text-sm text-neutral-300">Schemas that guide agents</span></div></li><li><div class="module-row flex gap-3 rounded-lg bg-dark-700/30 p-3"><strong class="text-emerald-400 text-sm">2.3</strong><span class="text-sm text-neutral-300">Results, errors, and recovery</span></div></li><li><div class="module-row flex gap-3 rounded-lg bg-dark-700/30 p-3"><strong class="text-emerald-400 text-sm">2.4</strong><span class="text-sm text-neutral-300">Contextual catalogs</span></div></li></ol>
+</article>
+<article class="chapter-map bg-dark-800 border border-dark-600 rounded-xl p-6" id="capitulo-3">
+<div class="flex flex-wrap items-start justify-between gap-4 mb-5"><div><p class="text-sm font-semibold text-neutral-400">CHAPTER 3</p><h3 class="text-xl font-bold mt-1">Application integration</h3><p class="text-sm text-neutral-400 mt-2 max-w-2xl">Connect tools to the interface, state, and backend without duplicating rules.</p></div><span class="px-3 py-1 rounded-full text-xs bg-dark-700 text-neutral-400">Next</span></div>
+<ol class="grid sm:grid-cols-2 gap-3"><li><div class="module-row flex gap-3 rounded-lg bg-dark-700/30 p-3"><strong class="text-emerald-400 text-sm">3.1</strong><span class="text-sm text-neutral-300">UI state and execution</span></div></li><li><div class="module-row flex gap-3 rounded-lg bg-dark-700/30 p-3"><strong class="text-emerald-400 text-sm">3.2</strong><span class="text-sm text-neutral-300">Backend, session, and authorization</span></div></li><li><div class="module-row flex gap-3 rounded-lg bg-dark-700/30 p-3"><strong class="text-emerald-400 text-sm">3.3</strong><span class="text-sm text-neutral-300">Frameworks and lifecycle</span></div></li><li><div class="module-row flex gap-3 rounded-lg bg-dark-700/30 p-3"><strong class="text-emerald-400 text-sm">3.4</strong><span class="text-sm text-neutral-300">Fallback and compatibility</span></div></li></ol>
+</article>
+<article class="chapter-map bg-dark-800 border border-dark-600 rounded-xl p-6" id="capitulo-4">
+<div class="flex flex-wrap items-start justify-between gap-4 mb-5"><div><p class="text-sm font-semibold text-neutral-400">CHAPTER 4</p><h3 class="text-xl font-bold mt-1">Builder quality</h3><p class="text-sm text-neutral-400 mt-2 max-w-2xl">Test selection, execution, safety, and experience before delivery.</p></div><span class="px-3 py-1 rounded-full text-xs bg-dark-700 text-neutral-400">Next</span></div>
+<ol class="grid sm:grid-cols-2 gap-3"><li><div class="module-row flex gap-3 rounded-lg bg-dark-700/30 p-3"><strong class="text-emerald-400 text-sm">4.1</strong><span class="text-sm text-neutral-300">Threats and trust boundaries</span></div></li><li><div class="module-row flex gap-3 rounded-lg bg-dark-700/30 p-3"><strong class="text-emerald-400 text-sm">4.2</strong><span class="text-sm text-neutral-300">Choice and argument evals</span></div></li><li><div class="module-row flex gap-3 rounded-lg bg-dark-700/30 p-3"><strong class="text-emerald-400 text-sm">4.3</strong><span class="text-sm text-neutral-300">Observability and governance</span></div></li><li><div class="module-row flex gap-3 rounded-lg bg-dark-700/30 p-3"><strong class="text-emerald-400 text-sm">4.4</strong><span class="text-sm text-neutral-300">Final Builder project</span></div></li></ol>
+</article></div></section>
+<section class="mb-12"><h2 class="text-2xl font-bold mb-6">Chapter 1 · available modules</h2><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"><a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-emerald-500/30 p-5" href="#modulo-1-1">
+<div class="flex items-center justify-between mb-2"><span class="text-emerald-400 font-bold text-sm">1.1</span><span class="text-xs text-neutral-500">3h</span></div>
+<h3 class="font-semibold mb-1 group-hover:text-emerald-400">🧭 WebMCP, MCP, and the agentic Web</h3><p class="text-xs text-neutral-400">Choose the right interface</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-emerald-500/30 p-5" href="#modulo-1-2">
+<div class="flex items-center justify-between mb-2"><span class="text-emerald-400 font-bold text-sm">1.2</span><span class="text-xs text-neutral-500">3h</span></div>
+<h3 class="font-semibold mb-1 group-hover:text-emerald-400">🧪 Development environment</h3><p class="text-xs text-neutral-400">Detect before relying on it</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-emerald-500/30 p-5" href="#modulo-1-3">
+<div class="flex items-center justify-between mb-2"><span class="text-emerald-400 font-bold text-sm">1.3</span><span class="text-xs text-neutral-500">3h</span></div>
+<h3 class="font-semibold mb-1 group-hover:text-emerald-400">🧾 Experimental declarative API</h3><p class="text-xs text-neutral-400">Your form becomes a tool</p>
+</a>
+<a class="group bg-dark-800 rounded-xl border border-dark-600 hover:border-emerald-500/30 p-5" href="#modulo-1-4">
+<div class="flex items-center justify-between mb-2"><span class="text-emerald-400 font-bold text-sm">1.4</span><span class="text-xs text-neutral-500">3h</span></div>
+<h3 class="font-semibold mb-1 group-hover:text-emerald-400">⚙️ Imperative API</h3><p class="text-xs text-neutral-400">Register real tools</p>
+</a></div></section>
+<section class="mb-12"><h2 class="text-2xl font-bold">Chained actions in practice</h2><p class="text-neutral-300 mt-3">Search, filter, and build a study list with operations shared between the interface and tools. See calls, results, and measurement limits.</p><a class="inline-flex mt-4 px-5 py-3 rounded-lg bg-emerald-600 text-white" href="../labs/jornada-estudos.html">Open the chained actions lab</a></section>
+<section class="mb-12"><div class="bg-gradient-to-br from-emerald-900/30 to-dark-800 border border-emerald-500/30 rounded-xl p-6"><p class="text-xs text-emerald-400 font-semibold">CROSS-CUTTING LAB</p><h2 class="text-2xl font-bold mt-2">Tool and schema validator</h2><p class="text-neutral-300 mt-3 max-w-3xl">Paste an auditable catalog in JSON and get a diagnosis of its contract, clarity, schema, lifecycle, risk, and sample output. The lab does not register or execute tools.</p><div class="flex justify-start mt-5"><a class="px-5 py-3 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-semibold" href="../labs/validador-tools.html">Validate my catalog</a></div></div></section>
+<h2 class="text-2xl font-bold mb-6">Detailed content</h2>
+<article class="bg-dark-800 rounded-xl border border-dark-600 mb-8 overflow-hidden" data-inema-module="1-1" data-inema-track="1" id="modulo-1-1">
+<header class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2"><span class="text-emerald-400 font-bold">1.1</span><span class="text-xs text-neutral-500">3h</span></div>
+<h3 class="text-2xl font-bold mb-2">🧭 WebMCP, MCP, and the agentic Web</h3><p class="text-neutral-400">Build a mental model that distinguishes visual automation, APIs, MCP, and tools exposed directly by the page.</p>
+<div class="inema-meter mt-4" data-inema-meter="modulo:1-1"><div class="flex justify-between gap-3 text-sm text-neutral-400 mb-2"><span data-inema-meter-frac="">0 of 6</span><span data-inema-meter-pct="">0%</span></div><div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill=""></div></div></div>
+</header>
+<div class="divide-y divide-dark-600"><div class="topic-item">
+<button aria-controls="painel-1-1-1" aria-expanded="false" class="w-full px-6 py-4 flex items-start gap-3 hover:bg-dark-700/50 text-left" onclick="toggleTopic(this)" type="button">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span aria-hidden="true" class="text-lg">🎯</span>
+<span><strong>See the problem before the technology</strong><span class="text-neutral-500 text-sm ml-2">— human goal</span></span>
+</button>
+<div class="topic-explanation px-6 pb-5" id="painel-1-1-1">
+<div class="bg-dark-700/50 rounded-lg p-5 space-y-4 ml-9">
+<div><span class="text-emerald-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm mt-1">The same search can be performed by a person, visual automation, or a structured tool.</p></div>
+<div><span class="text-emerald-400 font-semibold">Why learn this:</span><p class="text-neutral-300 text-sm mt-1">Comparing the three approaches builds the mental model that supports the rest of the course.</p></div>
+<div><span class="text-emerald-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm mt-1">human goal · visual steps · explicit capability · same interface</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="painel-1-1-2" aria-expanded="false" class="w-full px-6 py-4 flex items-start gap-3 hover:bg-dark-700/50 text-left" onclick="toggleTopic(this)" type="button">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span aria-hidden="true" class="text-lg">🔍</span>
+<span><strong>Distinguish five ways to interact with a website</strong><span class="text-neutral-500 text-sm ml-2">— understand</span></span>
+</button>
+<div class="topic-explanation px-6 pb-5" id="painel-1-1-2">
+<div class="bg-dark-700/50 rounded-lg p-5 space-y-4 ml-9">
+<div><span class="text-emerald-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm mt-1">Semantic web, browser automation, API, MCP, and agentic web solve different problems.</p></div>
+<div><span class="text-emerald-400 font-semibold">Why learn this:</span><p class="text-neutral-300 text-sm mt-1">The distinction prevents similar names from becoming one vague abstraction.</p></div>
+<div><span class="text-emerald-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm mt-1">understand · operate · call · discover</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="painel-1-1-3" aria-expanded="false" class="w-full px-6 py-4 flex items-start gap-3 hover:bg-dark-700/50 text-left" onclick="toggleTopic(this)" type="button">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span aria-hidden="true" class="text-lg">🧩</span>
+<span><strong>Experience WebMCP’s magic moment</strong><span class="text-neutral-500 text-sm ml-2">— registration</span></span>
+</button>
+<div class="topic-explanation px-6 pb-5" id="painel-1-1-3">
+<div class="bg-dark-700/50 rounded-lg p-5 space-y-4 ml-9">
+<div><span class="text-emerald-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm mt-1">The page registers; the browser observes; the agent chooses; JavaScript executes; the result comes back.</p></div>
+<div><span class="text-emerald-400 font-semibold">Why learn this:</span><p class="text-neutral-300 text-sm mt-1">Understanding the full lifecycle reveals where each responsibility really lives.</p></div>
+<div><span class="text-emerald-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm mt-1">registration · discovery · selection · execution</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="painel-1-1-4" aria-expanded="false" class="w-full px-6 py-4 flex items-start gap-3 hover:bg-dark-700/50 text-left" onclick="toggleTopic(this)" type="button">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span aria-hidden="true" class="text-lg">🛡️</span>
+<span><strong>Read your first tool line by line</strong><span class="text-neutral-500 text-sm ml-2">— name identifies</span></span>
+</button>
+<div class="topic-explanation px-6 pb-5" id="painel-1-1-4">
+<div class="bg-dark-700/50 rounded-lg p-5 space-y-4 ml-9">
+<div><span class="text-emerald-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm mt-1">A tool combines a name, description, schema, and an execute function.</p></div>
+<div><span class="text-emerald-400 font-semibold">Why learn this:</span><p class="text-neutral-300 text-sm mt-1">Each field influences a different decision by the agent and the application.</p></div>
+<div><span class="text-emerald-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm mt-1">name identifies · description guides · schema constrains · execute performs</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="painel-1-1-5" aria-expanded="false" class="w-full px-6 py-4 flex items-start gap-3 hover:bg-dark-700/50 text-left" onclick="toggleTopic(this)" type="button">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span aria-hidden="true" class="text-lg">👤</span>
+<span><strong>See the catalog change with context</strong><span class="text-neutral-500 text-sm ml-2">— home search</span></span>
+</button>
+<div class="topic-explanation px-6 pb-5" id="painel-1-1-5">
+<div class="bg-dark-700/50 rounded-lg p-5 space-y-4 ml-9">
+<div><span class="text-emerald-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm mt-1">Useful capabilities change across the home page, product, cart, and authenticated area.</p></div>
+<div><span class="text-emerald-400 font-semibold">Why learn this:</span><p class="text-neutral-300 text-sm mt-1">A contextual catalog reduces noise and avoids offering impossible actions.</p></div>
+<div><span class="text-emerald-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm mt-1">home searches · product selects · cart updates · session authorizes</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="painel-1-1-6" aria-expanded="false" class="w-full px-6 py-4 flex items-start gap-3 hover:bg-dark-700/50 text-left" onclick="toggleTopic(this)" type="button">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span aria-hidden="true" class="text-lg">✅</span>
+<span><strong>Build, break, and explain your architecture</strong><span class="text-neutral-500 text-sm ml-2">— fallback</span></span>
+</button>
+<div class="topic-explanation px-6 pb-5" id="painel-1-1-6">
+<div class="bg-dark-700/50 rounded-lg p-5 space-y-4 ml-9">
+<div><span class="text-emerald-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm mt-1">The Builder must account for fallback, authorization, cancellation, evidence, and limits.</p></div>
+<div><span class="text-emerald-400 font-semibold">Why learn this:</span><p class="text-neutral-300 text-sm mt-1">The project completes the mental model with a deliverable that can be demonstrated and critiqued.</p></div>
+<div><span class="text-emerald-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm mt-1">fallback · safety · evidence · project</p></div>
+</div>
+</div>
+</div></div>
+<div class="p-4 bg-dark-700/30 flex justify-start flex-wrap gap-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-700 rounded-lg" onclick="openModal('modal-1-1')" type="button">View in Modal</button>
+<a class="px-4 py-2 text-sm bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg" href="../curso/builder/modulo-1-1.html">View Full Version</a>
+</div>
+</article>
+<article class="bg-dark-800 rounded-xl border border-dark-600 mb-8 overflow-hidden" data-inema-module="1-2" data-inema-track="1" id="modulo-1-2">
+<header class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2"><span class="text-emerald-400 font-bold">1.2</span><span class="text-xs text-neutral-500">3h</span></div>
+<h3 class="text-2xl font-bold mb-2">🧪 Development environment</h3><p class="text-neutral-400">Prepare an environment that is safe, observable, and compatible with the experimental nature of the specification.</p>
+<div class="inema-meter mt-4" data-inema-meter="modulo:1-2"><div class="flex justify-between gap-3 text-sm text-neutral-400 mb-2"><span data-inema-meter-frac="">0 of 6</span><span data-inema-meter-pct="">0%</span></div><div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill=""></div></div></div>
+</header>
+<div class="divide-y divide-dark-600"><div class="topic-item">
+<button aria-controls="painel-1-2-1" aria-expanded="false" class="w-full px-6 py-4 flex items-start gap-3 hover:bg-dark-700/50 text-left" onclick="toggleTopic(this)" type="button">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span aria-hidden="true" class="text-lg">🎯</span>
+<span><strong>Enable a secure context</strong><span class="text-neutral-500 text-sm ml-2">— HTTPS in production</span></span>
+</button>
+<div class="topic-explanation px-6 pb-5" id="painel-1-2-1">
+<div class="bg-dark-700/50 rounded-lg p-5 space-y-4 ml-9">
+<div><span class="text-emerald-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm mt-1">The ModelContext interface is defined for SecureContext; HTTPS and localhost are the lab’s minimum requirements.</p></div>
+<div><span class="text-emerald-400 font-semibold">Why learn this:</span><p class="text-neutral-300 text-sm mt-1">The correct test distinguishes an unavailable API, experimental configuration, and an actual code failure.</p></div>
+<div><span class="text-emerald-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm mt-1">HTTPS in production · localhost in the lab · flag may vary · origin matters</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="painel-1-2-2" aria-expanded="false" class="w-full px-6 py-4 flex items-start gap-3 hover:bg-dark-700/50 text-left" onclick="toggleTopic(this)" type="button">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span aria-hidden="true" class="text-lg">🔍</span>
+<span><strong>Set up Vite and Node without coupling</strong><span class="text-neutral-500 text-sm ml-2">— Node for tooling</span></span>
+</button>
+<div class="topic-explanation px-6 pb-5" id="painel-1-2-2">
+<div class="bg-dark-700/50 rounded-lg p-5 space-y-4 ml-9">
+<div><span class="text-emerald-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm mt-1">Vite provides a local server and ES modules; Node runs the project automation, not the document’s WebMCP API.</p></div>
+<div><span class="text-emerald-400 font-semibold">Why learn this:</span><p class="text-neutral-300 text-sm mt-1">This separation lets you develop the site in any browser and enable WebMCP only as a progressive enhancement.</p></div>
+<div><span class="text-emerald-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm mt-1">Node for tooling · Vite serves the page · API lives in the Document · build does not determine support</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="painel-1-2-3" aria-expanded="false" class="w-full px-6 py-4 flex items-start gap-3 hover:bg-dark-700/50 text-left" onclick="toggleTopic(this)" type="button">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span aria-hidden="true" class="text-lg">🧩</span>
+<span><strong>Implement feature detection and fallback</strong><span class="text-neutral-500 text-sm ml-2">— test the property</span></span>
+</button>
+<div class="topic-explanation px-6 pb-5" id="painel-1-2-3">
+<div class="bg-dark-700/50 rounded-lg p-5 space-y-4 ml-9">
+<div><span class="text-emerald-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm mt-1">Feature detection checks for the actual capability at the time of use, without relying on the user agent or a fixed version.</p></div>
+<div><span class="text-emerald-400 font-semibold">Why learn this:</span><p class="text-neutral-300 text-sm mt-1">As the draft changes, detecting the available surface is more durable than hard-coding a list of browsers.</p></div>
+<div><span class="text-emerald-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm mt-1">test the property · fallback is functional · message is honest · no sniffing</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="painel-1-2-4" aria-expanded="false" class="w-full px-6 py-4 flex items-start gap-3 hover:bg-dark-700/50 text-left" onclick="toggleTopic(this)" type="button">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span aria-hidden="true" class="text-lg">🛡️</span>
+<span><strong>Inspect tools and events</strong><span class="text-neutral-500 text-sm ml-2">— structured console</span></span>
+</button>
+<div class="topic-explanation px-6 pb-5" id="painel-1-2-4">
+<div class="bg-dark-700/50 rounded-lg p-5 space-y-4 ml-9">
+<div><span class="text-emerald-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm mt-1">DevTools, the console, and a local inspector help you observe registration, catalog changes, input, and results.</p></div>
+<div><span class="text-emerald-400 font-semibold">Why learn this:</span><p class="text-neutral-300 text-sm mt-1">Without evidence, it's easy to confuse a well-registered tool with one that's actually safe and usable.</p></div>
+<div><span class="text-emerald-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm mt-1">structured console · observable toolchange · test inputs · captured result</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="painel-1-2-5" aria-expanded="false" class="w-full px-6 py-4 flex items-start gap-3 hover:bg-dark-700/50 text-left" onclick="toggleTopic(this)" type="button">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span aria-hidden="true" class="text-lg">👤</span>
+<span><strong>Use types and polyfills with limitations</strong><span class="text-neutral-500 text-sm ml-2">— types don't execute</span></span>
+</button>
+<div class="topic-explanation px-6 pb-5" id="painel-1-2-5">
+<div class="bg-dark-700/50 rounded-lg p-5 space-y-4 ml-9">
+<div><span class="text-emerald-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm mt-1">Types help the editor, and a polyfill can simulate the surface for testing, but neither proves the agent has native browser support.</p></div>
+<div><span class="text-emerald-400 font-semibold">Why learn this:</span><p class="text-neutral-300 text-sm mt-1">Distinguishing simulation from implementation prevents false positives in the readiness report.</p></div>
+<div><span class="text-emerald-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm mt-1">types don't execute · polyfill simulates · native is different · record the mode</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="painel-1-2-6" aria-expanded="false" class="w-full px-6 py-4 flex items-start gap-3 hover:bg-dark-700/50 text-left" onclick="toggleTopic(this)" type="button">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span aria-hidden="true" class="text-lg">✅</span>
+<span><strong>Publish a compatibility matrix</strong><span class="text-neutral-500 text-sm ml-2">— test date</span></span>
+</button>
+<div class="topic-explanation px-6 pb-5" id="painel-1-2-6">
+<div class="bg-dark-700/50 rounded-lg p-5 space-y-4 ml-9">
+<div><span class="text-emerald-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm mt-1">The matrix records the browser, channel, flag, secure context, date, and test result.</p></div>
+<div><span class="text-emerald-400 font-semibold">Why learn this:</span><p class="text-neutral-300 text-sm mt-1">An experimental API requires traceability; “it works here” isn’t enough for a team or for production.</p></div>
+<div><span class="text-emerald-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm mt-1">test date · version and channel · documented flag · verified fallback</p></div>
+</div>
+</div>
+</div></div>
+<div class="p-4 bg-dark-700/30 flex justify-start flex-wrap gap-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-700 rounded-lg" onclick="openModal('modal-1-2')" type="button">View in Modal</button>
+<a class="px-4 py-2 text-sm bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg" href="../curso/builder/modulo-1-2.html">View Full Version</a>
+</div>
+</article>
+<article class="bg-dark-800 rounded-xl border border-dark-600 mb-8 overflow-hidden" data-inema-module="1-3" data-inema-track="1" id="modulo-1-3">
+<header class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2"><span class="text-emerald-400 font-bold">1.3</span><span class="text-xs text-neutral-500">3h</span></div>
+<h3 class="text-2xl font-bold mb-2">🧾 Experimental declarative API</h3><p class="text-neutral-400">Turn semantic forms into tools agents can understand, while keeping them under user control.</p>
+<div class="inema-meter mt-4" data-inema-meter="modulo:1-3"><div class="flex justify-between gap-3 text-sm text-neutral-400 mb-2"><span data-inema-meter-frac="">0 of 6</span><span data-inema-meter-pct="">0%</span></div><div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill=""></div></div></div>
+</header>
+<div class="divide-y divide-dark-600"><div class="topic-item">
+<button aria-controls="painel-1-3-1" aria-expanded="false" class="w-full px-6 py-4 flex items-start gap-3 hover:bg-dark-700/50 text-left" onclick="toggleTopic(this)" type="button">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span aria-hidden="true" class="text-lg">🎯</span>
+<span><strong>Turn a form into a tool</strong><span class="text-neutral-500 text-sm ml-2">— form remains HTML</span></span>
+</button>
+<div class="topic-explanation px-6 pb-5" id="painel-1-3-1">
+<div class="bg-dark-700/50 rounded-lg p-5 space-y-4 ml-9">
+<div><span class="text-emerald-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm mt-1">The toolname and tooldescription attributes declare the form's intent without removing its HTML semantics.</p></div>
+<div><span class="text-emerald-400 font-semibold">Why learn this:</span><p class="text-neutral-300 text-sm mt-1">It's the lowest-effort path for journeys that already have fields, validation, and a submit button.</p></div>
+<div><span class="text-emerald-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm mt-1">form remains HTML · toolname identifies · description guides · progressive enhancement</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="painel-1-3-2" aria-expanded="false" class="w-full px-6 py-4 flex items-start gap-3 hover:bg-dark-700/50 text-left" onclick="toggleTopic(this)" type="button">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span aria-hidden="true" class="text-lg">🔍</span>
+<span><strong>Describe parameters unambiguously</strong><span class="text-neutral-500 text-sm ml-2">— name is the key</span></span>
+</button>
+<div class="topic-explanation px-6 pb-5" id="painel-1-3-2">
+<div class="bg-dark-700/50 rounded-lg p-5 space-y-4 ml-9">
+<div><span class="text-emerald-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm mt-1">The control's name becomes the property; toolparamdescription explains the meaning and expected format to the agent.</p></div>
+<div><span class="text-emerald-400 font-semibold">Why learn this:</span><p class="text-neutral-300 text-sm mt-1">Labels help people, while precise descriptions reduce plausible but incorrect entries.</p></div>
+<div><span class="text-emerald-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm mt-1">name is the key · label is for people · description guides selection · examples clarify</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="painel-1-3-3" aria-expanded="false" class="w-full px-6 py-4 flex items-start gap-3 hover:bg-dark-700/50 text-left" onclick="toggleTopic(this)" type="button">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span aria-hidden="true" class="text-lg">🧩</span>
+<span><strong>Synthesize a schema from HTML controls</strong><span class="text-neutral-500 text-sm ml-2">— required becomes a requirement</span></span>
+</button>
+<div class="topic-explanation px-6 pb-5" id="painel-1-3-3">
+<div class="bg-dark-700/50 rounded-lg p-5 space-y-4 ml-9">
+<div><span class="text-emerald-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm mt-1">Input types, required, min, max, and options contribute to the schema synthesized by the browser.</p></div>
+<div><span class="text-emerald-400 font-semibold">Why learn this:</span><p class="text-neutral-300 text-sm mt-1">Reusing semantic constraints keeps the manual form and the tool aligned.</p></div>
+<div><span class="text-emerald-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm mt-1">required becomes a requirement · select limits values · min/max constrain · algorithm is still evolving</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="painel-1-3-4" aria-expanded="false" class="w-full px-6 py-4 flex items-start gap-3 hover:bg-dark-700/50 text-left" onclick="toggleTopic(this)" type="button">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span aria-hidden="true" class="text-lg">🛡️</span>
+<span><strong>Control confirmation with toolautosubmit</strong><span class="text-neutral-500 text-sm ml-2">— missing means it needs review</span></span>
+</button>
+<div class="topic-explanation px-6 pb-5" id="painel-1-3-4">
+<div class="bg-dark-700/50 rounded-lg p-5 space-y-4 ml-9">
+<div><span class="text-emerald-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm mt-1">Without toolautosubmit, the agent fills in the form and the page returns focus to the user for review; with the attribute, submission can happen automatically.</p></div>
+<div><span class="text-emerald-400 font-semibold">Why learn this:</span><p class="text-neutral-300 text-sm mt-1">The choice should follow the action’s risk and impact, not just the convenience of the workflow.</p></div>
+<div><span class="text-emerald-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm mt-1">missing prompts review · boolean enables submission · risk guides decisions · UI shows completion</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="painel-1-3-5" aria-expanded="false" class="w-full px-6 py-4 flex items-start gap-3 hover:bg-dark-700/50 text-left" onclick="toggleTopic(this)" type="button">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span aria-hidden="true" class="text-lg">👤</span>
+<span><strong>Respond with SubmitEvent.respondWith</strong><span class="text-neutral-500 text-sm ml-2">— preventDefault first</span></span>
+</button>
+<div class="topic-explanation px-6 pb-5" id="painel-1-3-5">
+<div class="bg-dark-700/50 rounded-lg p-5 space-y-4 ml-9">
+<div><span class="text-emerald-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm mt-1">For agent-triggered submissions, agentInvoked lets you identify the source, and respondWith returns a Promise with the structured result.</p></div>
+<div><span class="text-emerald-400 font-semibold">Why learn this:</span><p class="text-neutral-300 text-sm mt-1">The agent receives a verifiable protocol without relying on scraping the page after submission.</p></div>
+<div><span class="text-emerald-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm mt-1">preventDefault first · test agentInvoked · Promise as response · error is structured</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="painel-1-3-6" aria-expanded="false" class="w-full px-6 py-4 flex items-start gap-3 hover:bg-dark-700/50 text-left" onclick="toggleTopic(this)" type="button">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span aria-hidden="true" class="text-lg">✅</span>
+<span><strong>Signal activation and cancellation</strong><span class="text-neutral-500 text-sm ml-2">— explicit visual state</span></span>
+</button>
+<div class="topic-explanation px-6 pb-5" id="painel-1-3-6">
+<div class="bg-dark-700/50 rounded-lg p-5 space-y-4 ml-9">
+<div><span class="text-emerald-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm mt-1">The draft describes tool activation and cancellation; support and event targets need to be confirmed in the browser being used.</p></div>
+<div><span class="text-emerald-400 font-semibold">Why learn this:</span><p class="text-neutral-300 text-sm mt-1">The interface must remain readable when the agent starts, the user reviews, or the call is canceled.</p></div>
+<div><span class="text-emerald-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm mt-1">explicit visual state · cancellation clears UI · draft may change · fallback doesn’t depend on this</p></div>
+</div>
+</div>
+</div></div>
+<div class="p-4 bg-dark-700/30 flex justify-start flex-wrap gap-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-700 rounded-lg" onclick="openModal('modal-1-3')" type="button">View in Modal</button>
+<a class="px-4 py-2 text-sm bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg" href="../curso/builder/modulo-1-3.html">View Full Version</a>
+</div>
+</article>
+<article class="bg-dark-800 rounded-xl border border-dark-600 mb-8 overflow-hidden" data-inema-module="1-4" data-inema-track="1" id="modulo-1-4">
+<header class="p-6 border-b border-dark-600">
+<div class="flex items-center justify-between mb-2"><span class="text-emerald-400 font-bold">1.4</span><span class="text-xs text-neutral-500">3h</span></div>
+<h3 class="text-2xl font-bold mb-2">⚙️ Imperative API</h3><p class="text-neutral-400">Register JavaScript tools with schemas, asynchronous execution, cancellation, and structured results.</p>
+<div class="inema-meter mt-4" data-inema-meter="modulo:1-4"><div class="flex justify-between gap-3 text-sm text-neutral-400 mb-2"><span data-inema-meter-frac="">0 of 6</span><span data-inema-meter-pct="">0%</span></div><div class="inema-bar"><div class="inema-bar__fill" data-inema-meter-fill=""></div></div></div>
+</header>
+<div class="divide-y divide-dark-600"><div class="topic-item">
+<button aria-controls="painel-1-4-1" aria-expanded="false" class="w-full px-6 py-4 flex items-start gap-3 hover:bg-dark-700/50 text-left" onclick="toggleTopic(this)" type="button">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+<span aria-hidden="true" class="text-lg">🎯</span>
+<span><strong>Register your first imperative tool</strong><span class="text-neutral-500 text-sm ml-2">— unique name</span></span>
+</button>
+<div class="topic-explanation px-6 pb-5" id="painel-1-4-1">
+<div class="bg-dark-700/50 rounded-lg p-5 space-y-4 ml-9">
+<div><span class="text-emerald-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm mt-1">document.modelContext.registerTool accepts name, optional title, description, inputSchema, execute, and optional annotations. The name accepts 1 to 128 ASCII alphanumeric characters, underscores, hyphens, or periods.</p></div>
+<div><span class="text-emerald-400 font-semibold">Why learn this:</span><p class="text-neutral-300 text-sm mt-1">The imperative approach supports workflows that don’t fit in a form or depend on rich logic and state.</p></div>
+<div><span class="text-emerald-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm mt-1">unique name · nonempty description · execute required · registration returns a Promise</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="painel-1-4-2" aria-expanded="false" class="w-full px-6 py-4 flex items-start gap-3 hover:bg-dark-700/50 text-left" onclick="toggleTopic(this)" type="button">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+<span aria-hidden="true" class="text-lg">🔍</span>
+<span><strong>Design a useful inputSchema</strong><span class="text-neutral-500 text-sm ml-2">— type object</span></span>
+</button>
+<div class="topic-explanation px-6 pb-5" id="painel-1-4-2">
+<div class="bg-dark-700/50 rounded-lg p-5 space-y-4 ml-9">
+<div><span class="text-emerald-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm mt-1">inputSchema uses JSON Schema to declare properties, types, enums, descriptions, and required fields.</p></div>
+<div><span class="text-emerald-400 font-semibold">Why learn this:</span><p class="text-neutral-300 text-sm mt-1">The schema is part of the reasoning for choosing and generating arguments; actual validation must still happen in the code.</p></div>
+<div><span class="text-emerald-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm mt-1">type object · focused properties · coherent required · validate in execute</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="painel-1-4-3" aria-expanded="false" class="w-full px-6 py-4 flex items-start gap-3 hover:bg-dark-700/50 text-left" onclick="toggleTopic(this)" type="button">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+<span aria-hidden="true" class="text-lg">🧩</span>
+<span><strong>Run asynchronously and return a structured response</strong><span class="text-neutral-500 text-sm ml-2">— Promise is accepted</span></span>
+</button>
+<div class="topic-explanation px-6 pb-5" id="painel-1-4-3">
+<div class="bg-dark-700/50 rounded-lg p-5 space-y-4 ml-9">
+<div><span class="text-emerald-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm mt-1">The execute callback can return a Promise; the resolved value is delivered to the agent.</p></div>
+<div><span class="text-emerald-400 font-semibold">Why learn this:</span><p class="text-neutral-300 text-sm mt-1">Small results, typed by convention and accompanied by evidence, make verification and chaining easier.</p></div>
+<div><span class="text-emerald-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm mt-1">Promise is accepted · result is serializable · UI is updated · errors are useful</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="painel-1-4-4" aria-expanded="false" class="w-full px-6 py-4 flex items-start gap-3 hover:bg-dark-700/50 text-left" onclick="toggleTopic(this)" type="button">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+<span aria-hidden="true" class="text-lg">🛡️</span>
+<span><strong>Control the lifecycle with AbortSignal</strong><span class="text-neutral-500 text-sm ml-2">— registration signal removes</span></span>
+</button>
+<div class="topic-explanation px-6 pb-5" id="painel-1-4-4">
+<div class="bg-dark-700/50 rounded-lg p-5 space-y-4 ml-9">
+<div><span class="text-emerald-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm mt-1">The registerTool signal removes the tool when aborted; the signal received by execute cancels the call in progress.</p></div>
+<div><span class="text-emerald-400 font-semibold">Why learn this:</span><p class="text-neutral-300 text-sm mt-1">This model prevents obsolete tools and work from continuing after the agent loses interest.</p></div>
+<div><span class="text-emerald-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm mt-1">registration signal removes · execution signal cancels · fetch accepts signal · cleanup is deterministic</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="painel-1-4-5" aria-expanded="false" class="w-full px-6 py-4 flex items-start gap-3 hover:bg-dark-700/50 text-left" onclick="toggleTopic(this)" type="button">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">5</span>
+<span aria-hidden="true" class="text-lg">👤</span>
+<span><strong>Discover and run tools on the page</strong><span class="text-neutral-500 text-sm ml-2">— getTools is asynchronous</span></span>
+</button>
+<div class="topic-explanation px-6 pb-5" id="painel-1-4-5">
+<div class="bg-dark-700/50 rounded-lg p-5 space-y-4 ml-9">
+<div><span class="text-emerald-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm mt-1">getTools lists tools exposed to the document, and executeTool runs a RegisteredTool with structured input.</p></div>
+<div><span class="text-emerald-400 font-semibold">Why learn this:</span><p class="text-neutral-300 text-sm mt-1">These operations enable in-page agents and controlled tests without simulating an external agent.</p></div>
+<div><span class="text-emerald-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm mt-1">getTools is asynchronous · origin can filter · execute uses RegisteredTool · cancellation is optional</p></div>
+</div>
+</div>
+</div>
+<div class="topic-item">
+<button aria-controls="painel-1-4-6" aria-expanded="false" class="w-full px-6 py-4 flex items-start gap-3 hover:bg-dark-700/50 text-left" onclick="toggleTopic(this)" type="button">
+<span class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-bold flex items-center justify-center flex-shrink-0">6</span>
+<span aria-hidden="true" class="text-lg">✅</span>
+<span><strong>Deliver a small, coherent catalog</strong><span class="text-neutral-500 text-sm ml-2">— fetch list</span></span>
+</button>
+<div class="topic-explanation px-6 pb-5" id="painel-1-4-6">
+<div class="bg-dark-700/50 rounded-lg p-5 space-y-4 ml-9">
+<div><span class="text-emerald-400 font-semibold">What it is:</span><p class="text-neutral-300 text-sm mt-1">Searching, querying, and checking availability form a sequence with distinct responsibilities and no generic tool.</p></div>
+<div><span class="text-emerald-400 font-semibold">Why learn this:</span><p class="text-neutral-300 text-sm mt-1">A streamlined catalog improves agent selection and creates a clear foundation for the Integrator phase.</p></div>
+<div><span class="text-emerald-400 font-semibold">Key concepts:</span><p class="text-neutral-300 text-sm mt-1">search lists · query provides details · availability checks · no overlap</p></div>
+</div>
+</div>
+</div></div>
+<div class="p-4 bg-dark-700/30 flex justify-start flex-wrap gap-3">
+<button class="px-4 py-2 text-sm bg-dark-600 hover:bg-dark-700 rounded-lg" onclick="openModal('modal-1-4')" type="button">View in Modal</button>
+<a class="px-4 py-2 text-sm bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg" href="../curso/builder/modulo-1-4.html">View Full Version</a>
+</div>
+</article>
+<section class="mt-14 bg-dark-800 border border-blue-500/30 rounded-xl p-8"><p class="text-blue-400 text-xs font-semibold">BUILDER CONTINUATION</p><h2 class="text-2xl font-bold mt-2">Next: tool design</h2><p class="text-neutral-300 mt-3">After the fundamentals, the same training continues in chapters 2, 3, and 4. Each chapter will have its own modules; none of them changes the student’s role to Integrator, Agent, or Expert.</p><div class="flex justify-start flex-wrap gap-3 mt-6"><button class="px-5 py-3 rounded-lg bg-dark-700 hover:bg-dark-600" data-inema-journey-open="" type="button">Save / export journey</button><a class="px-5 py-3 rounded-lg bg-blue-600 hover:bg-blue-500 text-white" href="#capitulo-2">View chapter 2 modules</a></div></section>
+</section>
+</main>
+<div aria-label="Module 1.1" aria-modal="true" class="modal hidden fixed inset-0 z-[70] flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-1-1" onclick="if(event.target===this)closeModal()" role="dialog"><div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600"><div class="p-4 border-b border-dark-600 flex justify-between"><span><strong class="text-emerald-400">1.1</strong> · WebMCP, MCP, and the agentic Web</span><button aria-label="Close" class="text-2xl" onclick="closeModal()" type="button">×</button></div><iframe class="flex-1 w-full rounded-b-xl" src="../curso/builder/modulo-1-1.html" title="Module 1.1"></iframe></div></div>
+<div aria-label="Module 1.2" aria-modal="true" class="modal hidden fixed inset-0 z-[70] flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-1-2" onclick="if(event.target===this)closeModal()" role="dialog"><div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600"><div class="p-4 border-b border-dark-600 flex justify-between"><span><strong class="text-emerald-400">1.2</strong> · Development environment</span><button aria-label="Close" class="text-2xl" onclick="closeModal()" type="button">×</button></div><iframe class="flex-1 w-full rounded-b-xl" src="../curso/builder/modulo-1-2.html" title="Module 1.2"></iframe></div></div>
+<div aria-label="Module 1.3" aria-modal="true" class="modal hidden fixed inset-0 z-[70] flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-1-3" onclick="if(event.target===this)closeModal()" role="dialog"><div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600"><div class="p-4 border-b border-dark-600 flex justify-between"><span><strong class="text-emerald-400">1.3</strong> · Experimental declarative API</span><button aria-label="Close" class="text-2xl" onclick="closeModal()" type="button">×</button></div><iframe class="flex-1 w-full rounded-b-xl" src="../curso/builder/modulo-1-3.html" title="Module 1.3"></iframe></div></div>
+<div aria-label="Module 1.4" aria-modal="true" class="modal hidden fixed inset-0 z-[70] flex items-center justify-center p-2 sm:p-4 bg-black/80" id="modal-1-4" onclick="if(event.target===this)closeModal()" role="dialog"><div class="bg-dark-800 rounded-xl w-full max-w-6xl h-[95vh] flex flex-col border border-dark-600"><div class="p-4 border-b border-dark-600 flex justify-between"><span><strong class="text-emerald-400">1.4</strong> · Imperative API</span><button aria-label="Close" class="text-2xl" onclick="closeModal()" type="button">×</button></div><iframe class="flex-1 w-full rounded-b-xl" src="../curso/builder/modulo-1-4.html" title="Module 1.4"></iframe></div></div>
+<footer class="border-t border-dark-600 py-8"><div class="max-w-6xl mx-auto px-4 text-sm text-neutral-500">WebMCP Builder · INEMA · Technical content based on the official draft; check for changes before production.</div><!-- inema-backlink:v1 --><p class="text-center mt-4"><a href="https://www.inema.club/cursos/247-formacao-webmcp-2-builder/">Full course details on INEMA.CLUB</a> · <a href="https://www.inema.club/aprender-inteligencia-artificial/">Guide: How to learn artificial intelligence</a></p><!-- /inema-backlink:v1 --></footer>
+<script>
+function toggleTopic(button){const item=button.closest('.topic-item');const panel=item.querySelector('.topic-explanation');const card=button.closest('[data-inema-module]');card.querySelectorAll('.topic-explanation.active').forEach(x=>{if(x!==panel){x.classList.remove('active');const b=x.previousElementSibling;if(b)b.setAttribute('aria-expanded','false')}});panel.classList.toggle('active');button.setAttribute('aria-expanded',panel.classList.contains('active')?'true':'false')}
+function openModal(id){const m=document.getElementById(id);if(m){m.classList.remove('hidden');document.body.style.overflow='hidden';m.querySelector('button')?.focus()}}
+function closeModal(){document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden'));document.body.style.overflow='auto'}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+const tt=document.getElementById('theme-toggle'),di=document.getElementById('theme-toggle-dark-icon'),li=document.getElementById('theme-toggle-light-icon');function syncTheme(){if(document.documentElement.classList.contains('dark')){li?.classList.remove('hidden');di?.classList.add('hidden')}else{di?.classList.remove('hidden');li?.classList.add('hidden')}}syncTheme();tt?.addEventListener('click',()=>{const next=document.documentElement.classList.contains('dark')?'claro':'inema-dark';if(window.INEMA&&typeof window.INEMA.setPref==='function')window.INEMA.setPref('theme',next);else{document.documentElement.classList.toggle('dark');localStorage.setItem('theme',next==='claro'?'light':'dark')}syncTheme()});
+</script>
+<script src="../assets/learn.js"></script>
+<script>if(window.INEMA&&typeof window.INEMA.init==='function')window.INEMA.init();</script>
+</body></html>
