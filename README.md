@@ -78,3 +78,11 @@ O validador considera as quatro annotations opcionais do draft: `readOnlyHint`, 
 - [Ficha completa](https://www.inema.club/cursos/247-formacao-webmcp-2-builder/)
 - [Guia de aprendizagem](https://www.inema.club/aprender-inteligencia-artificial/)
 - [Catálogo de cursos](https://www.inema.club/cursos/)
+
+<!-- inema-backlink:v1 -->
+## Mais no INEMA.CLUB
+
+- [Ficha completa deste curso](https://www.inema.club/cursos/247-formacao-webmcp-2-builder/)
+- [Guia: como aprender inteligência artificial](https://www.inema.club/aprender-inteligencia-artificial/)
+- [Todos os cursos](https://www.inema.club/cursos/)
+<!-- /inema-backlink:v1 -->
